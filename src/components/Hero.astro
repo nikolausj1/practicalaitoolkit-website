@@ -9,15 +9,17 @@
     <div class="subtitle">
       A plain-language guide to what AI is, when to use it, and how to get great results — built around the 2026 talk.
     </div>
-    <div class="hero-buttons">
-      <a href="#what-is-ai" class="cta-button">Start at the Beginning</a>
-    </div>
+    <a class="hero-scroll-cue" href="#what-is-ai" aria-label="Jump to first section">
+      <span>Five sections below</span>
+      <svg class="hero-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <polyline points="6 9 12 15 18 9"></polyline>
+      </svg>
+    </a>
   </div>
 </div>
 
 <style>
   .hero {
-    min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -42,15 +44,41 @@
     background: rgba(0, 31, 63, 0.78);
     backdrop-filter: blur(10px);
     border-left: 5px solid var(--brand-blue);
-    padding: 80px;
+    padding: 56px 64px;
     position: relative;
     z-index: 1;
-    animation: fadeInUp 1s ease;
+    animation: fadeInUp 400ms ease both;
   }
 
   @keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(30px); }
+    from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-scroll-cue {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 32px;
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  .hero-scroll-cue:hover { color: rgba(255, 255, 255, 0.9); }
+  .hero-chevron {
+    animation: heroBounce 2s ease-in-out infinite;
+  }
+  @keyframes heroBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(6px); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-content { animation: none; }
+    .hero-chevron { animation: none; }
   }
 
   .hero-eyebrow {
@@ -63,42 +91,35 @@
   }
 
   .hero h1 {
-    font-size: 88px;
+    font-size: 72px;
     font-weight: 700;
-    margin: 0 0 18px 0;
+    margin: 0 0 14px 0;
     line-height: 1;
     letter-spacing: -0.02em;
   }
 
   .hero h2 {
-    font-size: 38px;
+    font-size: 32px;
     font-weight: 500;
     color: rgba(255, 255, 255, 0.92);
-    margin: 0 0 30px 0;
+    margin: 0 0 24px 0;
   }
 
   .hero .subtitle {
-    font-size: 22px;
+    font-size: 20px;
     font-weight: 300;
     color: rgba(255, 255, 255, 0.78);
     padding-left: 18px;
     border-left: 3px solid var(--brand-blue);
-    margin-bottom: 40px;
+    margin-bottom: 0;
     line-height: 1.5;
   }
 
-  .hero-buttons {
-    display: flex;
-    gap: 16px;
-    flex-wrap: wrap;
-  }
-
   @media (max-width: 768px) {
-    .hero-content { padding: 40px; }
-    .hero h1 { font-size: 56px; }
-    .hero h2 { font-size: 26px; }
-    .hero .subtitle { font-size: 18px; }
-    .hero-buttons { flex-direction: column; align-items: stretch; }
-    .cta-button { text-align: center; }
+    .hero { padding: 56px 20px; }
+    .hero-content { padding: 36px 28px; }
+    .hero h1 { font-size: 48px; }
+    .hero h2 { font-size: 24px; }
+    .hero .subtitle { font-size: 17px; }
   }
 </style>

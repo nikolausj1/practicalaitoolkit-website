@@ -5,22 +5,32 @@ const ideas = [
   {
     title: 'Context Is the New Prompt',
     body: 'AI cannot do a good job unless it understands the situation. The most leveraged thing you can do isn\'t writing cleverer prompts — it\'s feeding the model the right context: the document, the brief, the prior conversation, the data, the constraints, the audience.',
+    image: '/images/curated/context.png',
+    alt: 'Diagram contrasting too-little context (generic reply) with enough context (relevant, on-target reply).',
   },
   {
     title: 'From Copy-Paste to Connected',
     body: 'The old workflow was: copy from a doc → paste into AI → copy the answer → paste it back. The new workflow is: connect AI directly to your approved sources and tools so it can read and write where the work actually lives. Less friction, fewer errors, and the AI sees the full picture.',
+    image: '/images/curated/connected-workflow.png',
+    alt: 'Side-by-side: a person manually gathering and pasting context vs. AI pulling context directly from connected sources.',
   },
   {
     title: 'Cross-Model Critique',
     body: 'Use one model to challenge another. Take the output of model A, paste it into model B, and ask "what\'s wrong with this?" Different models have different blind spots; making them argue surfaces problems neither would catch alone.',
+    image: '/images/curated/cross-model-critique.png',
+    alt: 'Loop diagram: Model A drafts, Model B critiques, Model A revises, repeat — yielding a stronger output.',
   },
   {
     title: 'AI on Your Desktop',
     body: 'AI is no longer just a browser tab. Tools like Claude for Desktop and ChatGPT\'s Mac app can read what you\'re working on, drive your applications, and stay in the flow with you. The barrier to "let me ask the AI" keeps dropping.',
+    image: '/images/curated/desktop-workspace.png',
+    alt: 'Project workspace folder structure: 00_Inbox, 01_Source/Context, 02_For Review, 03_Final Output.',
   },
   {
     title: 'Agents',
     body: 'Until now: you ask, it answers, you copy-paste, you execute the plan. With agents: you ask, and it executes the plan. It books the flight, files the ticket, sends the message, runs the code. This is the next major shift, and it\'s already starting.',
+    image: '/images/curated/agents.png',
+    alt: 'Example agent workflow planning a Santa Barbara trip — searching, comparing flights and hotels, and adding to calendar.',
   },
 ];
 ---
@@ -37,6 +47,9 @@ const ideas = [
         <div class="beyond-body">
           <h3>{i.title}</h3>
           <p>{i.body}</p>
+          <figure class="beyond-figure">
+            <img src={i.image} alt={i.alt} loading="lazy" />
+          </figure>
         </div>
       </article>
     ))}
@@ -104,11 +117,24 @@ const ideas = [
   }
   .beyond-row {
     display: grid;
-    grid-template-columns: 80px 1fr;
+    grid-template-columns: 80px minmax(0, 1fr);
     gap: 24px;
-    padding: 32px 0;
+    padding: 40px 0;
     border-bottom: 1px solid rgba(0, 102, 204, 0.18);
     align-items: start;
+  }
+  .beyond-figure {
+    margin: 24px 0 0 0;
+  }
+  .beyond-figure img {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-width: 880px;
+    border-radius: 10px;
+    background: white;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 31, 63, 0.08);
   }
   .beyond-num {
     color: var(--brand-blue);
@@ -135,5 +161,6 @@ const ideas = [
       gap: 8px;
     }
     .beyond-body h3 { font-size: 22px; }
+    .beyond-figure img { padding: 12px; }
   }
 </style>
