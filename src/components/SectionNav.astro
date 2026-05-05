@@ -7,9 +7,69 @@ const links = [
   { href: '#beyond-prompting', label: '05 · Beyond Prompting' },
 ];
 ---
-<nav class="section-nav" aria-label="Section navigation">
+<nav class="section-nav" aria-label="Section navigation" data-pos="top">
   <div class="section-nav-inner">
     <a href="#hero" class="brand">Practical AI</a>
     {links.map((l) => <a href={l.href}>{l.label}</a>)}
   </div>
 </nav>
+
+<script>
+  const nav = document.querySelector<HTMLElement>('.section-nav');
+  if (nav) {
+    let ticking = false;
+    const updatePos = () => {
+      nav.dataset.pos = window.scrollY > 40 ? 'scrolled' : 'top';
+      ticking = false;
+    };
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        window.requestAnimationFrame(updatePos);
+        ticking = true;
+      }
+    }, { passive: true });
+    updatePos();
+
+    const navLinks = Array.from(nav.querySelectorAll<HTMLAnchorElement>('a[href^="#"]'));
+    const sectionEls = navLinks
+      .map((a) => {
+        const id = a.getAttribute('href')?.slice(1);
+        return id ? document.getElementById(id) : null;
+      })
+      .filter((el): el is HTMLElement => el !== null);
+
+    const setActive = (id: string | null) => {
+      navLinks.forEach((a) => {
+        const matches = id !== null && a.getAttribute('href') === `#${id}`;
+        if (matches) a.dataset.active = 'true';
+        else delete a.dataset.active;
+      });
+    };
+
+    if ('IntersectionObserver' in window && sectionEls.length) {
+      const visible = new Map<string, number>();
+      const observer = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (entry.isIntersecting) {
+              visible.set(entry.target.id, entry.intersectionRatio);
+            } else {
+              visible.delete(entry.target.id);
+            }
+          }
+          let topId: string | null = null;
+          let topRatio = -1;
+          for (const [id, ratio] of visible) {
+            if (ratio > topRatio) {
+              topId = id;
+              topRatio = ratio;
+            }
+          }
+          setActive(topId);
+        },
+        { rootMargin: '-40% 0px -55% 0px', threshold: [0, 0.25, 0.5, 0.75, 1] }
+      );
+      sectionEls.forEach((el) => observer.observe(el));
+    }
+  }
+</script>
