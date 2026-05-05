@@ -1,0 +1,95 @@
+---
+import Section from '../components/Section.astro';
+
+const workExamples = [
+  'Drafting emails, reports, and proposals',
+  'Summarizing long documents and meeting notes',
+  'Brainstorming names, taglines, and concepts',
+  'Translating text between languages',
+  'Cleaning up data or generating boilerplate code',
+  'Preparing for interviews, presentations, and tough conversations',
+];
+
+const personalExamples = [
+  'Planning trips and creating itineraries',
+  'Cooking — recipes, substitutions, meal plans',
+  'Explaining anything in plain language',
+  'Helping with homework or learning a new topic',
+  'Writing thoughtful messages — birthday notes, condolences, apologies',
+  'Sorting through a decision out loud',
+];
+
+const strengths = [
+  'Brainstorming ideas',
+  'Drafting written content',
+  'Summarizing long documents',
+  'Reformatting and rewriting',
+  'Explaining difficult concepts',
+  'Translating between languages',
+  'Generating starter code',
+];
+
+const weaknesses = [
+  'Up-to-the-minute facts (without web search)',
+  'Math and precise calculations (without tools)',
+  'Anything where being wrong has real consequences',
+  'Tasks needing genuine human judgement or empathy',
+  'Knowing your private context unless you provide it',
+];
+---
+<Section id="when-to-use" number="02" title="When Should I Use AI?" band="dark">
+  <p>
+    AI works best on routine professional tasks that require skill but follow predictable patterns —
+    and on personal tasks where it can save you time, sharpen your thinking, or handle the parts you find tedious.
+  </p>
+
+  <h3>Real Work Examples</h3>
+  <ul class="arrow-list">
+    {workExamples.map((x) => <li>{x}</li>)}
+  </ul>
+
+  <h3>Personal Examples</h3>
+  <ul class="arrow-list">
+    {personalExamples.map((x) => <li>{x}</li>)}
+  </ul>
+
+  <h3>Strengths vs. Weaknesses</h3>
+  <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+    <div class="card">
+      <h4>AI is great at</h4>
+      <ul class="arrow-list" style="margin: 12px 0;">
+        {strengths.map((s) => <li>{s}</li>)}
+      </ul>
+    </div>
+    <div class="card">
+      <h4>AI struggles with</h4>
+      <ul class="arrow-list" style="margin: 12px 0;">
+        {weaknesses.map((w) => <li>{w}</li>)}
+      </ul>
+    </div>
+  </div>
+
+  <h3>Check Your Company Policy First</h3>
+  <div class="callout">
+    <p style="margin: 0;">
+      Before pasting any work content into a public AI tool, check your company's AI policy. A few common rules:
+    </p>
+    <ul class="arrow-list">
+      <li>Don't paste customer data, PII, or financial information into consumer chat tools.</li>
+      <li>Use the company-approved AI tool when one exists — it's often the same model with the right privacy controls.</li>
+      <li>Don't upload anything you wouldn't email to a stranger.</li>
+      <li>If in doubt, redact, paraphrase, or ask IT.</li>
+    </ul>
+  </div>
+</Section>
+
+<style>
+  .callout {
+    background: rgba(0, 102, 204, 0.12);
+    border: 1px solid rgba(0, 102, 204, 0.4);
+    border-left: 5px solid var(--brand-blue);
+    padding: 24px 28px;
+    border-radius: 6px;
+    margin: 20px 0;
+  }
+</style>

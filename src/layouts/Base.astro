@@ -1,0 +1,78 @@
+---
+import '../styles/global.css';
+import BackgroundNetwork from '../components/BackgroundNetwork.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'Practical AI Toolkit',
+  description = 'A plain-language companion site to the Practical AI talk — what AI is, when to use it, and how to get great results.',
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
+---
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:image" content="/og-image.jpg" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content="/og-image.jpg" />
+
+    <!-- Google Analytics (G-618YCL4R4R) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-618YCL4R4R"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-618YCL4R4R');
+    </script>
+  </head>
+  <body>
+    <BackgroundNetwork />
+    <div class="content">
+      <slot />
+    </div>
+
+    <script is:inline>
+      // Reveal-on-scroll. Engages only after JS confirms it can manage visibility,
+      // so non-JS users / slow loads / anchor jumps never get stuck-invisible content.
+      (function () {
+        var sections = document.querySelectorAll('section.scroll-section');
+        if (!sections.length || !('IntersectionObserver' in window)) return;
+        document.documentElement.classList.add('js-reveal');
+        var observer = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.05, rootMargin: '0px 0px -10% 0px' });
+        sections.forEach(function (s) { observer.observe(s); });
+        // Failsafe: after 4s, anything still hidden gets revealed.
+        setTimeout(function () {
+          sections.forEach(function (s) { s.classList.add('visible'); });
+        }, 4000);
+      })();
+    </script>
+  </body>
+</html>

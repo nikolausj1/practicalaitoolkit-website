@@ -1,0 +1,29 @@
+# build output
+dist/
+.astro/
+
+# deps
+node_modules/
+
+# environment
+.env
+.env.local
+.env.production
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# editor
+.vscode/
+.idea/
+*.swp
+.DS_Store
+
+# vercel
+.vercel
+
+# local-only deck assets (raw extraction; curated copies live in public/images)
+_deck-assets/

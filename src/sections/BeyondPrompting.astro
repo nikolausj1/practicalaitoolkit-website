@@ -1,0 +1,90 @@
+---
+import Section from '../components/Section.astro';
+
+const ideas = [
+  {
+    title: 'Context Is the New Prompt',
+    body: 'AI cannot do a good job unless it understands the situation. The most leveraged thing you can do isn\'t writing cleverer prompts — it\'s feeding the model the right context: the document, the brief, the prior conversation, the data, the constraints, the audience.',
+  },
+  {
+    title: 'From Copy-Paste to Connected',
+    body: 'The old workflow was: copy from a doc → paste into AI → copy the answer → paste it back. The new workflow is: connect AI directly to your approved sources and tools so it can read and write where the work actually lives. Less friction, fewer errors, and the AI sees the full picture.',
+  },
+  {
+    title: 'Cross-Model Critique',
+    body: 'Use one model to challenge another. Take the output of model A, paste it into model B, and ask "what\'s wrong with this?" Different models have different blind spots; making them argue surfaces problems neither would catch alone.',
+  },
+  {
+    title: 'AI on Your Desktop',
+    body: 'AI is no longer just a browser tab. Tools like Claude for Desktop and ChatGPT\'s Mac app can read what you\'re working on, drive your applications, and stay in the flow with you. The barrier to "let me ask the AI" keeps dropping.',
+  },
+  {
+    title: 'Agents',
+    body: 'Until now: you ask, it answers, you copy-paste, you execute the plan. With agents: you ask, and it executes the plan. It books the flight, files the ticket, sends the message, runs the code. This is the next major shift, and it\'s already starting.',
+  },
+];
+---
+<Section id="beyond-prompting" number="05" title="Beyond Prompting" band="light">
+  <p>
+    Once you can prompt confidently, the next leap isn't a better prompt — it's changing <em>how</em> you
+    work with AI. Here's where things are going.
+  </p>
+
+  <div class="beyond-grid">
+    {ideas.map((i, idx) => (
+      <article class="beyond-card">
+        <div class="beyond-num">{String(idx + 1).padStart(2, '0')}</div>
+        <h3 style="margin-top: 0;">{i.title}</h3>
+        <p>{i.body}</p>
+      </article>
+    ))}
+  </div>
+
+  <div class="closer">
+    <h3 style="color: var(--brand-blue); margin-top: 0;">The throughline</h3>
+    <p>
+      Practical AI isn't about the latest model. It's about getting comfortable working with these tools,
+      knowing where they help, and bringing them into the work where they pay off. Start small, stay curious,
+      keep your judgement in the loop.
+    </p>
+  </div>
+</Section>
+
+<style>
+  .beyond-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 24px;
+    margin: 30px 0;
+  }
+  .beyond-card {
+    background: white;
+    border: 1px solid rgba(0, 102, 204, 0.2);
+    border-top: 4px solid var(--brand-blue);
+    border-radius: 8px;
+    padding: 32px 28px 24px;
+    box-shadow: 0 6px 20px rgba(0, 31, 63, 0.06);
+    position: relative;
+  }
+  .beyond-num {
+    color: var(--brand-blue);
+    font-weight: 800;
+    font-size: 14px;
+    letter-spacing: 0.18em;
+    margin-bottom: 8px;
+  }
+  .beyond-card p {
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--dark-gray);
+    margin: 0;
+  }
+  .closer {
+    margin-top: 50px;
+    padding: 36px;
+    background: rgba(0, 102, 204, 0.06);
+    border-left: 5px solid var(--brand-blue);
+    border-radius: 6px;
+  }
+  .closer p { margin: 0; }
+</style>

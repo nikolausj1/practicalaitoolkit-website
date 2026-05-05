@@ -1,0 +1,24 @@
+---
+import Base from '../layouts/Base.astro';
+import Hero from '../components/Hero.astro';
+import SectionNav from '../components/SectionNav.astro';
+import Footer from '../components/Footer.astro';
+import WhatIsAI from '../sections/WhatIsAI.astro';
+import WhenToUse from '../sections/WhenToUse.astro';
+import HowToUse from '../sections/HowToUse.astro';
+import PromptingTips from '../sections/PromptingTips.astro';
+import BeyondPrompting from '../sections/BeyondPrompting.astro';
+---
+<Base
+  title="Practical AI Toolkit"
+  description="A plain-language companion site to the Practical AI talk — what AI is, when to use it, and how to get great results."
+>
+  <Hero />
+  <SectionNav />
+  <WhatIsAI />
+  <WhenToUse />
+  <HowToUse />
+  <PromptingTips />
+  <BeyondPrompting />
+  <Footer />
+</Base>

@@ -1,0 +1,72 @@
+---
+import Section from '../components/Section.astro';
+
+const tips = [
+  {
+    title: 'Ask Me Questions',
+    why: 'Stop guessing what info the AI needs. Let it interview you.',
+    prompt: 'Before you answer, ask me one question at a time until you have enough context to give me a great response. Then answer.',
+  },
+  {
+    title: 'Help Me Create a Prompt',
+    why: 'Use AI to write better prompts for AI.',
+    prompt: 'I want to create [a meeting agenda for my team\'s quarterly review]. Help me create a prompt that will produce a great result. Ask me clarifying questions first if you need them.',
+  },
+  {
+    title: 'Match My Tone',
+    why: 'AI defaults to a generic voice. Anchor it to yours.',
+    prompt: 'Here\'s a sample of how I write. Match this tone and style in the response below:\n\n[paste 1–2 paragraphs of your writing]\n\nNow respond to: [your actual ask]',
+  },
+  {
+    title: 'Favorite Commands',
+    why: 'A few one-liners that punch way above their weight.',
+    prompt: '"Rewrite this paragraph using a friendly tone of voice."\n"Elaborate on the third bullet."\n"Make it half as long without losing the substance."\n"What\'s the strongest objection to this argument?"\n"Translate this for a non-technical audience."',
+  },
+  {
+    title: 'Upload Files',
+    why: 'Most modern AI tools accept PDFs, docs, spreadsheets, and images. Use them.',
+    prompt: 'Upload a long PDF and ask: "Summarize the key arguments in 5 bullets, then list the 3 weakest claims and why."',
+  },
+  {
+    title: 'Show, Don\'t Just Tell',
+    why: 'One concrete example beats five sentences of instructions.',
+    prompt: 'Here\'s an example of the kind of output I want:\n\n[paste a great example]\n\nNow produce something similar for: [your input]',
+  },
+];
+---
+<Section id="prompting-tips" number="04" title="Prompting Tips" band="dark">
+  <p>
+    Beyond RTCF, a small set of techniques will make almost every prompt better. Each tip below comes
+    with a copy-pasteable starter you can use today.
+  </p>
+
+  <div class="tips-grid">
+    {tips.map((t) => (
+      <article class="tip-card">
+        <h3 style="margin-top: 0; color: white;">{t.title}</h3>
+        <p style="font-style: italic; opacity: 0.85; margin: 0 0 12px 0;">{t.why}</p>
+        <div class="prompt-block">{t.prompt}</div>
+      </article>
+    ))}
+  </div>
+</Section>
+
+<style>
+  .tips-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+    gap: 24px;
+    margin-top: 30px;
+  }
+  .tip-card {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(0, 102, 204, 0.3);
+    border-left: 4px solid var(--brand-blue);
+    border-radius: 8px;
+    padding: 28px 28px 20px;
+  }
+  .tip-card .prompt-block {
+    margin: 0;
+    background: rgba(0, 0, 0, 0.35);
+  }
+</style>

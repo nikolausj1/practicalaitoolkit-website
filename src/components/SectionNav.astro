@@ -1,0 +1,15 @@
+---
+const links = [
+  { href: '#what-is-ai', label: '01 · What is AI' },
+  { href: '#when-to-use', label: '02 · When to Use' },
+  { href: '#how-to-use', label: '03 · How to Use' },
+  { href: '#prompting-tips', label: '04 · Prompting Tips' },
+  { href: '#beyond-prompting', label: '05 · Beyond Prompting' },
+];
+---
+<nav class="section-nav" aria-label="Section navigation">
+  <div class="section-nav-inner">
+    <a href="#hero" class="brand">Practical AI</a>
+    {links.map((l) => <a href={l.href}>{l.label}</a>)}
+  </div>
+</nav>

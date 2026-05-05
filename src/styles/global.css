@@ -1,0 +1,324 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --brand-blue: #0066cc;
+  --dark-blue: #001f3f;
+  --light-blue: #e6f2ff;
+  --dark-gray: #333333;
+  --med-gray: #666666;
+  --surface-light: #f5f7fa;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: var(--dark-blue);
+  color: white;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+/* Animated geometric network background */
+.background-canvas {
+  position: fixed;
+  inset: 0;
+  background:
+    linear-gradient(45deg, transparent 40%, rgba(0, 102, 204, 0.03) 40%, rgba(0, 102, 204, 0.03) 60%, transparent 60%),
+    linear-gradient(-45deg, transparent 40%, rgba(0, 102, 204, 0.03) 40%, rgba(0, 102, 204, 0.03) 60%, transparent 60%);
+  background-size: 60px 60px;
+  opacity: 0.5;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.network-dots {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.dot {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: rgba(0, 102, 204, 0.6);
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(0, 102, 204, 0.5);
+  animation: pulse 3s ease-in-out infinite;
+}
+.dot:nth-child(1) { top: 20%; left: 15%; animation-delay: 0s; }
+.dot:nth-child(2) { top: 30%; left: 75%; animation-delay: 0.5s; }
+.dot:nth-child(3) { top: 60%; left: 25%; animation-delay: 1s; }
+.dot:nth-child(4) { top: 70%; left: 80%; animation-delay: 1.5s; }
+.dot:nth-child(5) { top: 45%; left: 50%; animation-delay: 2s; }
+.dot:nth-child(6) { top: 90%; left: 40%; animation-delay: 2.5s; }
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(2); opacity: 1; }
+}
+
+/* Content wrapper above background */
+.content {
+  position: relative;
+  z-index: 1;
+}
+
+/* Section base */
+section.scroll-section {
+  padding: 100px 40px;
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+/* Subtle entrance animation only when JS-driven reveal is active and motion is allowed.
+   Default = fully visible, so any rendering edge case (anchor jumps, slow IO) never hides content. */
+@media (prefers-reduced-motion: no-preference) {
+  html.js-reveal section.scroll-section:not(.visible) {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+}
+
+section.band-light {
+  background: var(--surface-light);
+  color: var(--dark-gray);
+}
+
+section.band-dark {
+  background: var(--dark-blue);
+  color: white;
+}
+
+.section-card {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 60px;
+  border-left: 5px solid var(--brand-blue);
+}
+
+/* Headings */
+h1 {
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+h2.section-title {
+  font-size: 42px;
+  font-weight: 700;
+  color: var(--brand-blue);
+  margin: 0 0 30px 0;
+  text-transform: uppercase;
+}
+
+h3 {
+  font-size: 28px;
+  font-weight: 600;
+  margin: 40px 0 20px 0;
+}
+
+.band-light h3 { color: var(--dark-gray); }
+.band-dark h3 { color: rgba(255, 255, 255, 0.95); }
+
+p {
+  font-size: 18px;
+  line-height: 1.8;
+  margin: 0 0 20px 0;
+}
+
+.band-light p { color: var(--dark-gray); }
+.band-dark p { color: rgba(255, 255, 255, 0.85); }
+
+/* Bulleted lists with arrow markers */
+ul.arrow-list {
+  list-style: none;
+  margin: 30px 0;
+  padding: 0;
+}
+
+ul.arrow-list li {
+  font-size: 18px;
+  line-height: 1.8;
+  margin-bottom: 18px;
+  padding-left: 30px;
+  position: relative;
+}
+
+ul.arrow-list li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: var(--brand-blue);
+  font-weight: bold;
+}
+
+.band-light ul.arrow-list li { color: var(--dark-gray); }
+.band-dark ul.arrow-list li { color: rgba(255, 255, 255, 0.85); }
+
+/* Buttons */
+.cta-button {
+  display: inline-block;
+  padding: 15px 40px;
+  background: var(--brand-blue);
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  border: 2px solid var(--brand-blue);
+  cursor: pointer;
+}
+
+.cta-button:hover {
+  background: transparent;
+  border-color: var(--brand-blue);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 20px rgba(0, 102, 204, 0.4);
+}
+
+.band-light .cta-button:hover { color: var(--brand-blue); }
+.band-dark .cta-button:hover { color: white; }
+
+/* Card grid (process steps, prompting tips, etc.) */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  margin: 40px 0;
+}
+
+.card {
+  background: rgba(0, 102, 204, 0.1);
+  padding: 30px;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 102, 204, 0.3);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 102, 204, 0.2);
+  border-color: var(--brand-blue);
+}
+
+.card h4 {
+  font-size: 20px;
+  color: var(--brand-blue);
+  margin: 0 0 10px 0;
+  font-weight: 600;
+}
+
+.card p {
+  font-size: 16px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.band-light .card p { color: var(--dark-gray); }
+.band-dark .card p { color: rgba(255, 255, 255, 0.85); }
+
+/* Two-column layout helper */
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  gap: 60px;
+  align-items: start;
+}
+
+/* Code-style callout for prompts */
+.prompt-block {
+  background: rgba(0, 31, 63, 0.65);
+  color: rgba(255, 255, 255, 0.92);
+  padding: 24px 28px;
+  border-left: 4px solid var(--brand-blue);
+  border-radius: 6px;
+  font-family: 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 15px;
+  line-height: 1.6;
+  margin: 24px 0;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.band-light .prompt-block {
+  background: #0b1a2e;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+/* Sticky section-jump nav */
+.section-nav {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  background: rgba(0, 31, 63, 0.85);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(0, 102, 204, 0.25);
+}
+
+.section-nav-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 14px 24px;
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.section-nav a {
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  transition: color 0.2s ease;
+}
+
+.section-nav a:hover { color: white; }
+.section-nav .brand {
+  color: white;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  margin-right: auto;
+}
+
+/* Footer */
+footer.site-footer {
+  background: var(--dark-blue);
+  color: rgba(255, 255, 255, 0.5);
+  text-align: center;
+  padding: 50px 24px;
+  font-size: 14px;
+  border-top: 1px solid rgba(0, 102, 204, 0.25);
+}
+
+footer.site-footer a {
+  color: rgba(255, 255, 255, 0.75);
+  text-decoration: none;
+}
+
+footer.site-footer a:hover { color: var(--brand-blue); }
+
+/* Responsive */
+@media (max-width: 768px) {
+  section.scroll-section { padding: 60px 20px; }
+  .section-card { padding: 40px 20px; }
+  h2.section-title { font-size: 32px; }
+  h3 { font-size: 22px; }
+  .two-col { grid-template-columns: 1fr; gap: 30px; }
+  .section-nav-inner { padding: 12px 16px; gap: 14px; }
+  .section-nav a { font-size: 12px; }
+  .card-grid { grid-template-columns: 1fr; }
+}

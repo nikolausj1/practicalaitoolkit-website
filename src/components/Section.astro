@@ -1,0 +1,27 @@
+---
+interface Props {
+  id: string;
+  title: string;
+  number?: string;
+  band: 'light' | 'dark';
+}
+const { id, title, number, band } = Astro.props;
+---
+<section id={id} class={`scroll-section band-${band}`}>
+  <div class="section-card">
+    {number && <p class="section-number">{number}</p>}
+    <h2 class="section-title">{title}</h2>
+    <slot />
+  </div>
+</section>
+
+<style>
+  .section-number {
+    color: var(--brand-blue);
+    font-size: 14px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin: 0 0 8px 0;
+  }
+</style>

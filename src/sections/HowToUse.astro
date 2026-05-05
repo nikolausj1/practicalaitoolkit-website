@@ -1,0 +1,141 @@
+---
+import Section from '../components/Section.astro';
+
+const rtcf = [
+  {
+    letter: 'R',
+    word: 'Role',
+    body: 'Assign the AI a persona. "You are a senior copywriter." "You are a CFO advising a startup." This anchors the model in a perspective.',
+  },
+  {
+    letter: 'T',
+    word: 'Task',
+    body: 'State exactly what you want it to do. "Draft a one-page memo." "Summarize this in five bullets." Be specific.',
+  },
+  {
+    letter: 'C',
+    word: 'Context',
+    body: 'Fill in the relevant background. Who is the audience? What constraints exist? What have you already tried? More context = better output.',
+  },
+  {
+    letter: 'F',
+    word: 'Format',
+    body: 'Tell it the shape you want back. Bullet list? Markdown table? Email? 200 words or 2000? Examples beat abstract instructions.',
+  },
+];
+
+const workflow = [
+  {
+    step: '01',
+    title: 'Use AI?',
+    body: 'Decide if this is a good use case. Routine, pattern-following, low-stakes? Yes. Novel, high-stakes, or requires private judgement? Maybe not.',
+  },
+  {
+    step: '02',
+    title: 'Set Up the Prompt',
+    body: 'Use the RTCF framework. Lay the foundation in your first message — Role, Task, Context, Format.',
+  },
+  {
+    step: '03',
+    title: 'Have a Conversation',
+    body: 'Don\'t accept the first draft. Refine. Redirect. Ask for alternatives. Say what you don\'t like.',
+  },
+  {
+    step: '04',
+    title: 'Verify and Finish',
+    body: 'You are the final reviewer. Fact-check anything that matters. Tighten the voice. Make it yours before it ships.',
+  },
+];
+---
+<Section id="how-to-use" number="03" title="How to Use AI" band="light">
+  <p>
+    The single biggest factor in getting a great answer from AI is the quality of what you send it.
+    A simple framework — and the willingness to keep talking to it — does most of the work.
+  </p>
+
+  <h3>The RTCF Prompting Framework</h3>
+  <div class="rtcf-grid">
+    {rtcf.map((r) => (
+      <div class="rtcf-card">
+        <div class="rtcf-letter">{r.letter}</div>
+        <div class="rtcf-word">{r.word}</div>
+        <p>{r.body}</p>
+      </div>
+    ))}
+  </div>
+
+  <h3>Before vs. After: A Simple Example</h3>
+  <div class="two-col" style="grid-template-columns: 1fr 1fr;">
+    <div>
+      <p style="font-weight: 600; color: var(--med-gray);">Lazy prompt</p>
+      <div class="prompt-block">Give me a good chicken recipe for dinner.</div>
+    </div>
+    <div>
+      <p style="font-weight: 600; color: var(--brand-blue);">RTCF prompt</p>
+      <div class="prompt-block">You are a weeknight home-cook coach. Give me a chicken recipe I can make for two people in under 35 minutes using ingredients I likely have in a basic pantry. Skip anything that needs to marinate. Format as: title, ingredients (with substitutions), 5–7 numbered steps, and a "what to serve with it" line.</div>
+    </div>
+  </div>
+
+  <h3>It's a Conversation</h3>
+  <p>
+    Don't accept the first response. Refine. Redirect. Repeat. That's how you get great work — same as
+    working with a junior teammate who's brilliant but needs guidance. "Make it shorter." "More skeptical."
+    "Try it from the other person's point of view." Each exchange compounds.
+  </p>
+
+  <h3>You Still Matter</h3>
+  <p>
+    AI is a force multiplier, not a replacement. You bring the taste, the judgement, the relationships,
+    the accountability. Humans are still an essential element of every AI workflow — and the people who
+    do best with these tools are the ones who stay in the loop, not the ones who try to outsource themselves.
+  </p>
+
+  <h3>A Sample Workflow</h3>
+  <div class="card-grid">
+    {workflow.map((w) => (
+      <div class="card">
+        <div style="color: var(--brand-blue); font-weight: 700; font-size: 14px; letter-spacing: 0.15em;">{w.step}</div>
+        <h4 style="margin-top: 8px;">{w.title}</h4>
+        <p>{w.body}</p>
+      </div>
+    ))}
+  </div>
+</Section>
+
+<style>
+  .rtcf-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    margin: 30px 0;
+  }
+  .rtcf-card {
+    padding: 28px;
+    background: white;
+    border: 1px solid rgba(0, 102, 204, 0.25);
+    border-left: 5px solid var(--brand-blue);
+    border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(0, 31, 63, 0.05);
+  }
+  .rtcf-letter {
+    font-size: 56px;
+    font-weight: 800;
+    color: var(--brand-blue);
+    line-height: 1;
+    letter-spacing: -0.04em;
+  }
+  .rtcf-word {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--dark-gray);
+    margin: 4px 0 12px 0;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .rtcf-card p {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--dark-gray);
+    margin: 0;
+  }
+</style>

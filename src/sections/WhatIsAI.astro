@@ -1,0 +1,129 @@
+---
+import Section from '../components/Section.astro';
+
+const aiTypes = [
+  {
+    title: 'Predictive AI',
+    body: 'Predicts outcomes from patterns in data. Powers fraud detection, recommendation engines, demand forecasting, medical diagnostics. It tells you what is likely to happen.',
+  },
+  {
+    title: 'Generative AI',
+    body: 'Creates new content — text, images, code, audio, video. Powers ChatGPT, Claude, Midjourney, and the tools this site is mostly about. It produces something that did not exist a moment ago.',
+  },
+];
+
+const generalTools = [
+  { name: 'ChatGPT', vendor: 'OpenAI' },
+  { name: 'Claude', vendor: 'Anthropic' },
+  { name: 'Gemini', vendor: 'Google' },
+  { name: 'Copilot', vendor: 'Microsoft' },
+  { name: 'Grok', vendor: 'xAI' },
+  { name: 'Perplexity', vendor: 'Perplexity AI' },
+];
+
+const specializedTools = [
+  { name: 'Midjourney', purpose: 'Image generation' },
+  { name: 'Flux', purpose: 'Image generation' },
+  { name: 'Fireflies', purpose: 'Meeting notes' },
+  { name: 'Gamma', purpose: 'Slide decks' },
+  { name: 'Grammarly', purpose: 'Writing assistance' },
+  { name: 'Jasper', purpose: 'Marketing copy' },
+];
+
+const modes = [
+  {
+    title: 'Fast Mode',
+    body: 'Instant answers. Great for everyday questions, quick rewrites, brainstorming, and routine tasks. Pick this 90% of the time.',
+  },
+  {
+    title: 'Thinking Mode',
+    body: 'The model deliberates before answering. Slower, but much better at complex reasoning, multi-step problems, math, and code. Reach for it when the stakes are higher.',
+  },
+];
+
+const features = [
+  'Thinking Mode',
+  'Deep Research',
+  'Web Search',
+  'Agent Mode',
+  'Voice Mode',
+  'Video Mode',
+  'Image Generation',
+  'File Upload',
+  'Code Execution',
+];
+---
+<Section id="what-is-ai" number="01" title="What is AI?" band="light">
+  <p>
+    AI is a technology that learns patterns from massive amounts of data and uses those patterns to do new things —
+    answer questions, generate writing, summarize documents, write code, create images, and a lot more.
+  </p>
+
+  <h3>Two Main Types of AI</h3>
+  <div class="card-grid">
+    {aiTypes.map((t) => (
+      <div class="card">
+        <h4>{t.title}</h4>
+        <p>{t.body}</p>
+      </div>
+    ))}
+  </div>
+
+  <h3>How These Models Learn</h3>
+  <p>
+    Modern AI models are trained on billions of examples — books, articles, websites, and conversations. They
+    learn patterns: grammar, facts, reasoning, code structure, what good writing sounds like. Once trained, they
+    don't look anything up. They predict, token by token, what should come next given everything they've seen.
+  </p>
+
+  <h3>The AI Tool Landscape</h3>
+  <div class="two-col" style="grid-template-columns: 1fr 1fr;">
+    <div>
+      <h4 style="color: var(--brand-blue); margin: 0 0 14px 0;">General-Purpose Tools</h4>
+      <ul class="arrow-list">
+        {generalTools.map((t) => <li><strong>{t.name}</strong> — {t.vendor}</li>)}
+      </ul>
+    </div>
+    <div>
+      <h4 style="color: var(--brand-blue); margin: 0 0 14px 0;">Specialized Tools</h4>
+      <ul class="arrow-list">
+        {specializedTools.map((t) => <li><strong>{t.name}</strong> — {t.purpose}</li>)}
+      </ul>
+    </div>
+  </div>
+
+  <h3>What Model Should I Use?</h3>
+  <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+    {modes.map((m) => (
+      <div class="card">
+        <h4>{m.title}</h4>
+        <p>{m.body}</p>
+      </div>
+    ))}
+  </div>
+
+  <h3>Tools &amp; Features to Know</h3>
+  <p>Today's AI assistants are no longer just text-in / text-out. The features that matter most:</p>
+  <div class="feature-pills">
+    {features.map((f) => <span class="pill">{f}</span>)}
+  </div>
+</Section>
+
+<style>
+  .feature-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 16px 0 8px 0;
+  }
+  .pill {
+    display: inline-block;
+    padding: 8px 16px;
+    background: rgba(0, 102, 204, 0.12);
+    border: 1px solid rgba(0, 102, 204, 0.35);
+    border-radius: 999px;
+    color: var(--brand-blue);
+    font-weight: 600;
+    font-size: 14px;
+  }
+</style>
