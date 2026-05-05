@@ -42,15 +42,87 @@ const modes = [
 ];
 
 const features = [
-  'Thinking Mode',
-  'Deep Research',
-  'Web Search',
-  'Agent Mode',
-  'Voice Mode',
-  'Video Mode',
-  'Image Generation',
-  'File Upload',
-  'Code Execution',
+  {
+    name: 'Thinking Mode',
+    definition:
+      'A setting that tells the model to deliberate step-by-step before answering instead of responding instantly. Trades speed for accuracy on hard problems.',
+    example:
+      'Ask Claude to plan a five-day Tokyo trip with three kids, dietary restrictions, and a $3,000 cap. Fast Mode gives you a generic itinerary; Thinking Mode actually reconciles the constraints and flags conflicts.',
+    examples_label: 'Available in',
+    examples_value: 'Claude (Extended Thinking) · ChatGPT (o-series) · Gemini (Deep Think) · Grok (Think)',
+  },
+  {
+    name: 'Deep Research',
+    definition:
+      'An autonomous research mode where the AI plans a multi-step investigation, browses dozens of sources, and produces a cited written report. Takes 5–30 minutes; runs while you do other things.',
+    example:
+      '"Build me a competitive landscape of US-based vertical SaaS companies with under 50 employees serving the construction industry. Include funding, headcount, and a one-line take on each." You get a footnoted report you can hand to a stakeholder.',
+    examples_label: 'Available in',
+    examples_value: 'ChatGPT (Deep Research) · Gemini (Deep Research) · Perplexity (Deep Research) · Grok (DeepSearch)',
+  },
+  {
+    name: 'Web Search',
+    definition:
+      'Lets the AI look things up live on the open web instead of relying only on its training data. The model decides when to search; you can usually force it on or off.',
+    example:
+      'Ask "what changed in the SEC\'s climate disclosure rule this month?" Without web search the model is stuck at its training cutoff and may guess. With it, you get a current answer with links.',
+    examples_label: 'Available in',
+    examples_value: 'Every major chat tool — ChatGPT, Claude, Gemini, Copilot, Grok, Perplexity (built around it)',
+  },
+  {
+    name: 'Agent Mode',
+    definition:
+      'The AI doesn\'t just write the answer — it does the work. It opens a browser, clicks, fills forms, runs code, and returns a finished result. You set the goal; it figures out the steps.',
+    example:
+      '"Find me three flights from SEA to BOS next Friday under $400, in a comparison table, then add the best one to my calendar." The agent actually opens kayak.com, runs the searches, and (with permission) writes the calendar event.',
+    examples_label: 'Available in',
+    examples_value: 'ChatGPT (Operator / Agent Mode) · Claude (Computer Use, Claude Code) · Gemini (Project Mariner)',
+  },
+  {
+    name: 'Voice Mode',
+    definition:
+      'Talk to the model and have it talk back, in real time, with a natural-sounding voice. Most implementations now hear tone of voice and can be interrupted mid-sentence.',
+    example:
+      'Run a 20-minute mock interview while you walk the dog. The model plays a tough hiring manager, asks follow-ups, then debriefs you on what to tighten. No typing.',
+    examples_label: 'Available in',
+    examples_value: 'ChatGPT (Advanced Voice) · Gemini Live · Claude (voice on mobile) · Grok (Voice Mode)',
+  },
+  {
+    name: 'Video Mode',
+    definition:
+      'Two flavors. (1) The model can see your camera or screen in real time and react to what\'s in front of it. (2) The model can generate full video clips from a text prompt.',
+    example:
+      'Point your phone at a broken sprinkler valve and ask "what is this part and where do I get a replacement?" — the model identifies it on camera. Or generate a 10-second cinematic shot of a kayak gliding through fog with Veo or Sora.',
+    examples_label: 'Available in',
+    examples_value: 'Live video: ChatGPT, Gemini Live · Generation: Sora (OpenAI), Veo (Google), Runway, Kling',
+  },
+  {
+    name: 'Image Generation',
+    definition:
+      'Create images from a text description. Modern versions also edit images you provide — change the background, swap the outfit, restyle, remove a person, or extend the canvas.',
+    example:
+      'Upload a phone photo of your living room and prompt "make it look like a Pacific Northwest cabin — wood walls, warm light, fewer cables." You get a preview good enough to share with a designer.',
+    examples_label: 'Available in',
+    examples_value: 'ChatGPT (GPT-Image) · Gemini (Imagen / Nano Banana) · Midjourney · Flux · Adobe Firefly',
+  },
+  {
+    name: 'File Upload',
+    definition:
+      'Drop a PDF, Word doc, spreadsheet, slide deck, image, or audio file into the chat. The model reads it as part of your conversation. Most tools accept multiple files at once.',
+    example:
+      'Upload a 60-page contract and ask: "summarize the obligations on us, list anything unusual compared to a standard MSA, and draft a redline I can send back."',
+    examples_label: 'Available in',
+    examples_value: 'ChatGPT · Claude · Gemini · Copilot · Grok — typical limits: PDFs, Office docs, images, CSVs, audio',
+  },
+  {
+    name: 'Code Execution',
+    definition:
+      'The model can write code, run it in a sandbox, see the output, and use the result to answer your question. Lets it do real math, parse files, generate charts, and verify its own work.',
+    example:
+      'Upload a messy CSV of sales data and ask "what were the top 5 products by margin in Q3, and chart them by week?" The model writes Python, runs it, and returns the numbers + a chart — no spreadsheet acrobatics.',
+    examples_label: 'Available in',
+    examples_value: 'ChatGPT (Code Interpreter / Advanced Data Analysis) · Claude (Analysis Tool) · Gemini',
+  },
 ];
 ---
 <Section id="what-is-ai" number="01" title="What is AI?" band="light">
@@ -103,27 +175,84 @@ const features = [
   </div>
 
   <h3>Tools &amp; Features to Know</h3>
-  <p>Today's AI assistants are no longer just text-in / text-out. The features that matter most:</p>
-  <div class="feature-pills">
-    {features.map((f) => <span class="pill">{f}</span>)}
+  <p>Today's AI assistants are no longer just text-in / text-out. These are the features that matter most — what each one is, when to reach for it, and where to find it.</p>
+
+  <div class="feature-list">
+    {features.map((f, idx) => (
+      <article class="feature-row">
+        <div class="feature-num">{String(idx + 1).padStart(2, '0')}</div>
+        <div class="feature-body">
+          <h4>{f.name}</h4>
+          <p class="feature-def">{f.definition}</p>
+          <p class="feature-example"><strong>Example:</strong> {f.example}</p>
+          <p class="feature-where"><strong>{f.examples_label}:</strong> {f.examples_value}</p>
+        </div>
+      </article>
+    ))}
   </div>
 </Section>
 
 <style>
-  .feature-pills {
+  .feature-list {
     display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin: 16px 0 8px 0;
+    flex-direction: column;
+    gap: 0;
+    margin: 30px 0 0 0;
+    border-top: 1px solid rgba(0, 102, 204, 0.18);
   }
-  .pill {
-    display: inline-block;
-    padding: 8px 16px;
-    background: rgba(0, 102, 204, 0.12);
-    border: 1px solid rgba(0, 102, 204, 0.35);
-    border-radius: 999px;
+  .feature-row {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 24px;
+    padding: 28px 0;
+    border-bottom: 1px solid rgba(0, 102, 204, 0.18);
+    align-items: start;
+  }
+  .feature-num {
+    color: var(--brand-blue);
+    font-weight: 800;
+    font-size: 14px;
+    letter-spacing: 0.18em;
+    padding-top: 4px;
+  }
+  .feature-body h4 {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--dark-gray);
+    margin: 0 0 10px 0;
+  }
+  .feature-def {
+    color: var(--dark-gray);
+    font-size: 17px;
+    line-height: 1.7;
+    margin: 0 0 14px 0;
+  }
+  .feature-example {
+    color: var(--dark-gray);
+    font-size: 16px;
+    line-height: 1.7;
+    margin: 0 0 12px 0;
+    padding: 14px 18px;
+    background: rgba(0, 102, 204, 0.06);
+    border-left: 3px solid var(--brand-blue);
+    border-radius: 4px;
+  }
+  .feature-where {
+    color: var(--med-gray);
+    font-size: 14px;
+    line-height: 1.6;
+    margin: 0;
+  }
+  .feature-where strong {
     color: var(--brand-blue);
     font-weight: 600;
-    font-size: 14px;
+  }
+  @media (max-width: 768px) {
+    .feature-row {
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+    .feature-body h4 { font-size: 20px; }
+    .feature-def { font-size: 16px; }
   }
 </style>
