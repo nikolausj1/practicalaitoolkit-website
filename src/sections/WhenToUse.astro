@@ -36,11 +36,66 @@ const weaknesses = [
   'Tasks needing genuine human judgement or empathy',
   'Knowing your private context unless you provide it',
 ];
+
+const dontUse = [
+  {
+    title: 'When you need to learn and synthesize',
+    body: 'Asking for a summary isn\'t the same as reading. AI shortcuts the thinking that makes the learning stick.',
+  },
+  {
+    title: 'When accuracy has to be near-perfect',
+    body: 'Hallucinations are confident and plausible — the kind of error you stop catching once you trust the output.',
+  },
+  {
+    title: 'When you don\'t yet know how AI fails',
+    body: 'AI doesn\'t fail like humans. It will agree with wrong answers, double down, or fabricate a convincing source. Get hands-on with the failure modes before you trust important work to it.',
+  },
+  {
+    title: 'When the effort is the point',
+    body: 'Writers rewrite, athletes practice, students struggle. If working through the problem is what produces the insight, AI removes the insight.',
+  },
+  {
+    title: 'When AI is genuinely bad at the task',
+    body: 'Counting letters, rigorous arithmetic without tools, anything where it pattern-matches when it should compute. There\'s no manual; trial and error is the only way to learn the edges.',
+  },
+];
 ---
 <Section id="when-to-use" number="02" title="When Should I Use AI?" band="dark">
   <p>
     AI works best on routine professional tasks that require skill but follow predictable patterns —
     and on personal tasks where it can save you time, sharpen your thinking, or handle the parts you find tedious.
+  </p>
+
+  <h3>It's Not Google</h3>
+  <p>
+    Most people treat AI like a search engine — that's like using a race car to deliver pizza. You'll get there, but
+    you're missing the point. Google answers your query. AI helps you do the work.
+  </p>
+  <div class="two-col" style="grid-template-columns: 1fr 1fr; gap: 30px;">
+    <div>
+      <h4 style="color: var(--brand-blue); margin: 0 0 14px 0;">Use Google when</h4>
+      <ul class="arrow-list">
+        <li>You need one specific fact</li>
+        <li>You want the most recent information</li>
+        <li>You need to verify something is true</li>
+      </ul>
+    </div>
+    <div>
+      <h4 style="color: var(--brand-blue); margin: 0 0 14px 0;">Use AI when</h4>
+      <ul class="arrow-list">
+        <li>You want a fact <em>and</em> the explanation around it</li>
+        <li>You have a series of related questions</li>
+        <li>You need help thinking through a complex topic</li>
+        <li>You want to explore ideas, not just retrieve them</li>
+      </ul>
+    </div>
+  </div>
+  <p style="margin-top: 24px;">Searching looks like this:</p>
+  <pre class="prompt-block prompt-block--muted">best vacation spots with kids</pre>
+  <p>Instructing looks like this:</p>
+  <pre class="prompt-block">Act like a travel agent. Plan a 5-day family trip in August with kids under 10, $2K budget, flying from Seattle. Include rainy-day activities.</pre>
+  <p style="margin-top: 16px; font-style: italic; opacity: 0.85;">
+    You're not searching. You're instructing.
   </p>
 
   <h3>Real Work Examples</h3>
@@ -69,6 +124,31 @@ const weaknesses = [
     </div>
   </div>
 
+  <h3>When Not to Use AI</h3>
+  <p>
+    Five times to put AI down — beyond the obvious (illegal use, anything where being wrong is catastrophic):
+  </p>
+  <div class="dont-list">
+    {dontUse.map((d, idx) => (
+      <article class="dont-row">
+        <div class="dont-num">{String(idx + 1).padStart(2, '0')}</div>
+        <div class="dont-body">
+          <h4>{d.title}</h4>
+          <p>{d.body}</p>
+        </div>
+      </article>
+    ))}
+  </div>
+  <div class="callout callout--warn">
+    <p style="margin: 0 0 10px 0; color: var(--brand-blue); font-weight: 700; font-size: 13px; letter-spacing: 0.18em; text-transform: uppercase;">
+      Don't do this
+    </p>
+    <pre class="prompt-block" style="margin: 0 0 14px 0;">AI, write my performance review for my direct report Sarah. She's been struggling but I don't want to deal with the difficult conversation.</pre>
+    <p style="margin: 0; font-style: italic; opacity: 0.85;">
+      Removes the human element that makes feedback meaningful — and ducks the management work that actually matters.
+    </p>
+  </div>
+
   <h3>Check Your Company Policy First</h3>
   <div class="callout">
     <p style="margin: 0;">
@@ -91,5 +171,55 @@ const weaknesses = [
     padding: 24px 28px;
     border-radius: 6px;
     margin: 20px 0;
+  }
+  .callout--warn {
+    margin-top: 28px;
+  }
+
+  .prompt-block--muted {
+    opacity: 0.6;
+    border-left-color: rgba(255, 255, 255, 0.25);
+  }
+
+  .dont-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin: 24px 0 0 0;
+    border-top: 1px solid rgba(0, 102, 204, 0.25);
+  }
+  .dont-row {
+    display: grid;
+    grid-template-columns: 70px 1fr;
+    gap: 24px;
+    padding: 24px 0;
+    border-bottom: 1px solid rgba(0, 102, 204, 0.25);
+    align-items: start;
+  }
+  .dont-num {
+    color: var(--brand-blue);
+    font-weight: 800;
+    font-size: 14px;
+    letter-spacing: 0.18em;
+    padding-top: 4px;
+  }
+  .dont-body h4 {
+    margin: 0 0 8px 0;
+    font-size: 20px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.95);
+  }
+  .dont-body p {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.82);
+  }
+  @media (max-width: 768px) {
+    .dont-row {
+      grid-template-columns: 1fr;
+      gap: 6px;
+    }
+    .dont-body h4 { font-size: 18px; }
   }
 </style>

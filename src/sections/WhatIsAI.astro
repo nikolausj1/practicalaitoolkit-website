@@ -52,15 +52,6 @@ const features = [
     examples_value: 'Claude (Extended Thinking) · ChatGPT (o-series) · Gemini (Deep Think) · Grok (Think)',
   },
   {
-    name: 'Deep Research',
-    definition:
-      'An autonomous research mode where the AI plans a multi-step investigation, browses dozens of sources, and produces a cited written report. Takes 5–30 minutes; runs while you do other things.',
-    example:
-      '"Build me a competitive landscape of US-based vertical SaaS companies with under 50 employees serving the construction industry. Include funding, headcount, and a one-line take on each." You get a footnoted report you can hand to a stakeholder.',
-    examples_label: 'Available in',
-    examples_value: 'ChatGPT (Deep Research) · Gemini (Deep Research) · Perplexity (Deep Research) · Grok (DeepSearch)',
-  },
-  {
     name: 'Web Search',
     definition:
       'Lets the AI look things up live on the open web instead of relying only on its training data. The model decides when to search; you can usually force it on or off.',
@@ -70,13 +61,58 @@ const features = [
     examples_value: 'Every major chat tool — ChatGPT, Claude, Gemini, Copilot, Grok, Perplexity (built around it)',
   },
   {
-    name: 'Agent Mode',
+    name: 'Deep Research',
     definition:
-      'The AI doesn\'t just write the answer — it does the work. It opens a browser, clicks, fills forms, runs code, and returns a finished result. You set the goal; it figures out the steps.',
+      'An autonomous research mode where the AI plans a multi-step investigation, browses dozens of sources, and produces a cited written report. Takes 5–30 minutes; runs while you do other things.',
     example:
-      '"Find me three flights from SEA to BOS next Friday under $400, in a comparison table, then add the best one to my calendar." The agent actually opens kayak.com, runs the searches, and (with permission) writes the calendar event.',
+      '"Build me a competitive landscape of US-based vertical SaaS companies with under 50 employees serving the construction industry. Include funding, headcount, and a one-line take on each." You get a footnoted report you can hand to a stakeholder.',
     examples_label: 'Available in',
-    examples_value: 'ChatGPT (Operator / Agent Mode) · Claude (Computer Use, Claude Code) · Gemini (Project Mariner)',
+    examples_value: 'ChatGPT (Deep Research) · Gemini (Deep Research) · Perplexity (Deep Research) · Grok (DeepSearch)',
+  },
+  {
+    name: 'Memory',
+    definition:
+      'The model remembers things you tell it across separate conversations — your name, role, preferences, ongoing projects — without you having to repeat yourself every time. You can review and edit what it remembers.',
+    example:
+      'Tell ChatGPT once that you write in plain language, prefer bullet lists, and work in higher ed. From then on, every new chat opens with that context already loaded — no preamble required.',
+    examples_label: 'Available in',
+    examples_value: 'ChatGPT (Memory) · Claude (Project memory) · Gemini (Memory) · Grok',
+  },
+  {
+    name: 'Personalization',
+    definition:
+      'Set persistent instructions that shape how the AI talks to you — tone, length, default formatting, what to assume about your work — applied to every new conversation.',
+    example:
+      'Tell Claude once: "I\'m a marketing director. Default to 200-word responses, skip the disclaimers, and challenge weak ideas instead of just agreeing." Every chat starts in that mode.',
+    examples_label: 'Available in',
+    examples_value: 'ChatGPT (Custom Instructions) · Claude (System Prompts / Styles) · Gemini (Saved Info)',
+  },
+  {
+    name: 'Document Analysis',
+    definition:
+      'Drop a PDF, Word doc, spreadsheet, slide deck, or audio file into the chat. The model reads it as part of your conversation and can summarize, compare, redline, pull data, or answer questions about it.',
+    example:
+      'Upload a 60-page contract and ask: "summarize the obligations on us, list anything unusual compared to a standard MSA, and draft a redline I can send back."',
+    examples_label: 'Available in',
+    examples_value: 'ChatGPT · Claude · Gemini · Copilot · Grok — typical limits: PDFs, Office docs, CSVs, audio',
+  },
+  {
+    name: 'Image Analysis',
+    definition:
+      'Upload a photo, screenshot, chart, or whiteboard scribble and the model can read what\'s in it — text, diagrams, objects, handwriting — and answer questions about it.',
+    example:
+      'Photograph a confusing nutrition label and ask "is this OK for someone on a low-FODMAP diet, and what are the worst ingredients?" Or paste a screenshot of an error message and ask what\'s wrong and how to fix it.',
+    examples_label: 'Available in',
+    examples_value: 'Every major chat tool now sees images — ChatGPT, Claude, Gemini, Copilot, Grok',
+  },
+  {
+    name: 'Image Generation',
+    definition:
+      'Create images from a text description. Modern versions also edit images you provide — change the background, swap the outfit, restyle, remove a person, or extend the canvas.',
+    example:
+      'Upload a phone photo of your living room and prompt "make it look like a Pacific Northwest cabin — wood walls, warm light, fewer cables." You get a preview good enough to share with a designer.',
+    examples_label: 'Available in',
+    examples_value: 'ChatGPT (GPT-Image) · Gemini (Imagen / Nano Banana) · Midjourney · Flux · Adobe Firefly',
   },
   {
     name: 'Voice Mode',
@@ -97,31 +133,58 @@ const features = [
     examples_value: 'Live video: ChatGPT, Gemini Live · Generation: Sora (OpenAI), Veo (Google), Runway, Kling',
   },
   {
-    name: 'Image Generation',
+    name: 'Coding',
     definition:
-      'Create images from a text description. Modern versions also edit images you provide — change the background, swap the outfit, restyle, remove a person, or extend the canvas.',
-    example:
-      'Upload a phone photo of your living room and prompt "make it look like a Pacific Northwest cabin — wood walls, warm light, fewer cables." You get a preview good enough to share with a designer.',
-    examples_label: 'Available in',
-    examples_value: 'ChatGPT (GPT-Image) · Gemini (Imagen / Nano Banana) · Midjourney · Flux · Adobe Firefly',
-  },
-  {
-    name: 'File Upload',
-    definition:
-      'Drop a PDF, Word doc, spreadsheet, slide deck, image, or audio file into the chat. The model reads it as part of your conversation. Most tools accept multiple files at once.',
-    example:
-      'Upload a 60-page contract and ask: "summarize the obligations on us, list anything unusual compared to a standard MSA, and draft a redline I can send back."',
-    examples_label: 'Available in',
-    examples_value: 'ChatGPT · Claude · Gemini · Copilot · Grok — typical limits: PDFs, Office docs, images, CSVs, audio',
-  },
-  {
-    name: 'Code Execution',
-    definition:
-      'The model can write code, run it in a sandbox, see the output, and use the result to answer your question. Lets it do real math, parse files, generate charts, and verify its own work.',
+      'The model can write code in any common language, explain it, debug it, and in many tools actually run it in a sandbox to verify the result. Goes well beyond pasting a snippet.',
     example:
       'Upload a messy CSV of sales data and ask "what were the top 5 products by margin in Q3, and chart them by week?" The model writes Python, runs it, and returns the numbers + a chart — no spreadsheet acrobatics.',
     examples_label: 'Available in',
-    examples_value: 'ChatGPT (Code Interpreter / Advanced Data Analysis) · Claude (Analysis Tool) · Gemini',
+    examples_value: 'ChatGPT (Code Interpreter) · Claude (Analysis Tool, Claude Code) · Gemini · purpose-built: Cursor, Windsurf, GitHub Copilot',
+  },
+  {
+    name: 'Computer Use',
+    definition:
+      'Give the model control of a virtual desktop — it can move the mouse, click, type, open apps, and operate software the same way you would. The lower-level cousin of Agent Mode.',
+    example:
+      'Hand Claude a spreadsheet, ask it to open a browser-based BI tool, build a specific report, and save the result back to your folder. It drives the apps directly instead of telling you what to click.',
+    examples_label: 'Available in',
+    examples_value: 'Claude (Computer Use) · ChatGPT (Operator) · Gemini (Project Mariner)',
+  },
+  {
+    name: 'Agent Mode',
+    definition:
+      'The AI doesn\'t just write the answer — it does the work. It plans the steps, opens a browser, fills forms, runs code, and returns a finished result. You set the goal; it figures out the path.',
+    example:
+      '"Find me three flights from SEA to BOS next Friday under $400, in a comparison table, then add the best one to my calendar." The agent opens kayak.com, runs the searches, and (with permission) writes the calendar event.',
+    examples_label: 'Available in',
+    examples_value: 'ChatGPT (Agent Mode) · Claude (Claude Code, Computer Use) · Gemini (Project Mariner)',
+  },
+  {
+    name: 'Connectors & MCP',
+    definition:
+      'Plug the AI directly into your tools — Gmail, Drive, Notion, Slack, GitHub, your database — so it can read and act in those systems with your permission. MCP (Model Context Protocol) is the open standard that powers most of this.',
+    example:
+      'Connect Claude to your Notion workspace and Google Calendar, then ask: "look at my project plan in Notion, find this week\'s deadlines, and tell me which meetings on my calendar should be moved." It reads both directly — no copy-paste.',
+    examples_label: 'Available in',
+    examples_value: 'Claude (Connectors / MCP) · ChatGPT (Connectors) · Gemini (Workspace integrations) · custom via MCP servers',
+  },
+  {
+    name: 'Skills',
+    definition:
+      'Reusable instruction packs you install once and then invoke by name — like add-ons that teach the model a specific workflow, format, or set of guardrails.',
+    example:
+      'Install a "Brand Voice" skill that knows your style guide, tone, and forbidden words. From then on you can say "draft this announcement using brand-voice" and it produces on-brand copy without re-explaining the rules each time.',
+    examples_label: 'Available in',
+    examples_value: 'Claude (Skills) · ChatGPT (GPTs play a similar role) · custom skill libraries are emerging across the major tools',
+  },
+  {
+    name: 'Projects',
+    definition:
+      'A persistent workspace that bundles a set of files, custom instructions, and chat history around a single piece of work. Every conversation inside the project shares that context.',
+    example:
+      'Create a "Q4 Board Deck" project, drop in last quarter\'s deck, the financial model, and a rubric for what good slides look like. Any chat in that project already knows your goals, history, and constraints.',
+    examples_label: 'Available in',
+    examples_value: 'Claude (Projects) · ChatGPT (Projects) · Gemini (Gems) · Notion AI',
   },
 ];
 ---
