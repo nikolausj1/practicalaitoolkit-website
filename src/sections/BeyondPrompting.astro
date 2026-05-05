@@ -30,61 +30,110 @@ const ideas = [
     work with AI. Here's where things are going.
   </p>
 
-  <div class="beyond-grid">
+  <div class="beyond-list">
     {ideas.map((i, idx) => (
-      <article class="beyond-card">
+      <article class="beyond-row">
         <div class="beyond-num">{String(idx + 1).padStart(2, '0')}</div>
-        <h3 style="margin-top: 0;">{i.title}</h3>
-        <p>{i.body}</p>
+        <div class="beyond-body">
+          <h3>{i.title}</h3>
+          <p>{i.body}</p>
+        </div>
       </article>
     ))}
   </div>
 
-  <div class="closer">
-    <h3 style="color: var(--brand-blue); margin-top: 0;">The throughline</h3>
-    <p>
-      Practical AI isn't about the latest model. It's about getting comfortable working with these tools,
-      knowing where they help, and bringing them into the work where they pay off. Start small, stay curious,
-      keep your judgement in the loop.
-    </p>
-  </div>
+  <aside class="next-step">
+    <div class="next-step-inner">
+      <p class="eyebrow">Want to go deeper?</p>
+      <h3>Bring AI to your team or your event</h3>
+      <p>
+        I work with organizations on AI strategy, implementation, and training, and give talks that make
+        AI approachable for any audience. If you want help putting these ideas to work, that's where it
+        happens.
+      </p>
+      <a class="cta-button" href="https://practicalaiservices.com" target="_blank" rel="noopener">
+        Visit practicalaiservices.com →
+      </a>
+    </div>
+  </aside>
 </Section>
 
-<style>
-  .beyond-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 24px;
-    margin: 30px 0;
+<style is:global>
+  .next-step {
+    margin-top: 60px;
+    background: var(--dark-blue);
+    border-radius: 10px;
+    padding: 48px;
+    color: white;
+    border-left: 5px solid var(--brand-blue);
   }
-  .beyond-card {
-    background: white;
-    border: 1px solid rgba(0, 102, 204, 0.2);
-    border-top: 4px solid var(--brand-blue);
-    border-radius: 8px;
-    padding: 32px 28px 24px;
-    box-shadow: 0 6px 20px rgba(0, 31, 63, 0.06);
-    position: relative;
+  .next-step .next-step-inner { max-width: 760px; }
+  .next-step .eyebrow {
+    color: var(--brand-blue);
+    font-size: 13px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin: 0 0 12px 0;
+  }
+  .next-step h3 {
+    color: white;
+    font-size: 30px;
+    font-weight: 700;
+    margin: 0 0 16px 0;
+  }
+  .next-step p {
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 17px;
+    line-height: 1.7;
+    margin: 0 0 24px 0;
+  }
+  @media (max-width: 768px) {
+    .next-step { padding: 32px 24px; }
+    .next-step h3 { font-size: 24px; }
+  }
+</style>
+
+<style>
+  .beyond-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin: 30px 0 0 0;
+    border-top: 1px solid rgba(0, 102, 204, 0.18);
+  }
+  .beyond-row {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 24px;
+    padding: 32px 0;
+    border-bottom: 1px solid rgba(0, 102, 204, 0.18);
+    align-items: start;
   }
   .beyond-num {
     color: var(--brand-blue);
     font-weight: 800;
     font-size: 14px;
     letter-spacing: 0.18em;
-    margin-bottom: 8px;
+    padding-top: 6px;
   }
-  .beyond-card p {
-    font-size: 16px;
-    line-height: 1.65;
+  .beyond-body h3 {
+    margin: 0 0 12px 0;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--dark-gray);
+  }
+  .beyond-body p {
+    font-size: 17px;
+    line-height: 1.75;
     color: var(--dark-gray);
     margin: 0;
   }
-  .closer {
-    margin-top: 50px;
-    padding: 36px;
-    background: rgba(0, 102, 204, 0.06);
-    border-left: 5px solid var(--brand-blue);
-    border-radius: 6px;
+  @media (max-width: 768px) {
+    .beyond-row {
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+    .beyond-body h3 { font-size: 22px; }
   }
-  .closer p { margin: 0; }
 </style>

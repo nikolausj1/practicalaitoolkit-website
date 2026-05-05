@@ -91,18 +91,38 @@ const workflow = [
   </p>
 
   <h3>A Sample Workflow</h3>
-  <div class="card-grid">
-    {workflow.map((w) => (
-      <div class="card">
-        <div style="color: var(--brand-blue); font-weight: 700; font-size: 14px; letter-spacing: 0.15em;">{w.step}</div>
-        <h4 style="margin-top: 8px;">{w.title}</h4>
-        <p>{w.body}</p>
-      </div>
-    ))}
-  </div>
+  <p>
+    Five steps that turn a one-shot prompt into a real working session. The middle three are where the
+    actual quality lives — most people skip straight from <em>Use AI?</em> to <em>Polish</em>, and that's
+    why their results disappoint.
+  </p>
+  <figure class="workflow-figure">
+    <img
+      src="/images/sample-workflow.png"
+      alt="Sample workflow: 01 Use AI? — Determine if it's a good use case. 02 Framework — Create a conversation foundation. 03 Refine — Use follow-up requests to refine. 04 Review — You are the taste maker. 05 Polish — Small manual changes if needed."
+      loading="lazy"
+      width="1600"
+      height="900"
+    />
+  </figure>
 </Section>
 
 <style>
+  .workflow-figure {
+    margin: 30px 0 0 0;
+    padding: 0;
+    background: white;
+    border-radius: 10px;
+    border: 1px solid rgba(0, 102, 204, 0.2);
+    box-shadow: 0 8px 30px rgba(0, 31, 63, 0.08);
+    overflow: hidden;
+  }
+  .workflow-figure img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
   .rtcf-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
