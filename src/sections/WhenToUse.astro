@@ -139,16 +139,6 @@ const dontUse = [
       </article>
     ))}
   </div>
-  <div class="callout callout--warn">
-    <p style="margin: 0 0 10px 0; color: var(--brand-blue); font-weight: 700; font-size: 13px; letter-spacing: 0.18em; text-transform: uppercase;">
-      Don't do this
-    </p>
-    <pre class="prompt-block" style="margin: 0 0 14px 0;">AI, write my performance review for my direct report Sarah. She's been struggling but I don't want to deal with the difficult conversation.</pre>
-    <p style="margin: 0; font-style: italic; opacity: 0.85;">
-      Removes the human element that makes feedback meaningful — and ducks the management work that actually matters.
-    </p>
-  </div>
-
   <h3>Check Your Company Policy First</h3>
   <div class="callout">
     <p style="margin: 0;">
@@ -177,8 +167,10 @@ const dontUse = [
   }
 
   .prompt-block--muted {
-    opacity: 0.6;
-    border-left-color: rgba(255, 255, 255, 0.25);
+    background: rgba(0, 102, 204, 0.04);
+    color: var(--med-gray);
+    border-left-color: rgba(0, 102, 204, 0.3);
+    box-shadow: none;
   }
 
   .dont-list {

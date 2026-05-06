@@ -13,21 +13,21 @@ const aiTypes = [
 ];
 
 const generalTools = [
-  { name: 'ChatGPT', vendor: 'OpenAI' },
-  { name: 'Claude', vendor: 'Anthropic' },
-  { name: 'Gemini', vendor: 'Google' },
-  { name: 'Copilot', vendor: 'Microsoft' },
-  { name: 'Grok', vendor: 'xAI' },
-  { name: 'Perplexity', vendor: 'Perplexity AI' },
+  { name: 'ChatGPT', vendor: 'OpenAI', slug: null },
+  { name: 'Claude', vendor: 'Anthropic', slug: 'anthropic' },
+  { name: 'Gemini', vendor: 'Google', slug: 'googlegemini' },
+  { name: 'Copilot', vendor: 'Microsoft', slug: 'githubcopilot' },
+  { name: 'Grok', vendor: 'xAI', slug: 'x' },
+  { name: 'Perplexity', vendor: 'Perplexity AI', slug: 'perplexity' },
 ];
 
 const specializedTools = [
-  { name: 'Midjourney', purpose: 'Image generation' },
-  { name: 'Flux', purpose: 'Image generation' },
-  { name: 'Fireflies', purpose: 'Meeting notes' },
-  { name: 'Gamma', purpose: 'Slide decks' },
-  { name: 'Grammarly', purpose: 'Writing assistance' },
-  { name: 'Jasper', purpose: 'Marketing copy' },
+  { name: 'Midjourney', purpose: 'Image generation', slug: null },
+  { name: 'Flux', purpose: 'Image generation', slug: 'flux' },
+  { name: 'Fireflies', purpose: 'Meeting notes', slug: null },
+  { name: 'Gamma', purpose: 'Slide decks', slug: null },
+  { name: 'Grammarly', purpose: 'Writing assistance', slug: 'grammarly' },
+  { name: 'Jasper', purpose: 'Marketing copy', slug: null },
 ];
 
 const modes = [
@@ -49,7 +49,12 @@ const features = [
     example:
       'Ask Claude to plan a five-day Tokyo trip with three kids, dietary restrictions, and a $3,000 cap. Fast Mode gives you a generic itinerary; Thinking Mode actually reconciles the constraints and flags conflicts.',
     examples_label: 'Available in',
-    examples_value: 'Claude (Extended Thinking) · ChatGPT (o-series) · Gemini (Deep Think) · Grok (Think)',
+    links: [
+      { label: 'Claude (Extended Thinking)', href: 'https://docs.anthropic.com/en/docs/build-with-claude/extended-thinking' },
+      { label: 'ChatGPT (o-series)', href: 'https://openai.com/index/learning-to-reason-with-llms/' },
+      { label: 'Gemini (Deep Think)', href: 'https://blog.google/products/gemini/gemini-2-5-deep-think/' },
+      { label: 'Grok (Think)', href: 'https://x.ai/news/grok-3' },
+    ],
   },
   {
     name: 'Web Search',
@@ -58,7 +63,15 @@ const features = [
     example:
       'Ask "what changed in the SEC\'s climate disclosure rule this month?" Without web search the model is stuck at its training cutoff and may guess. With it, you get a current answer with links.',
     examples_label: 'Available in',
-    examples_value: 'Every major chat tool — ChatGPT, Claude, Gemini, Copilot, Grok, Perplexity (built around it)',
+    prefix: 'Every major chat tool — ',
+    links: [
+      { label: 'ChatGPT', href: 'https://help.openai.com/en/articles/9237897-chatgpt-search' },
+      { label: 'Claude', href: 'https://www.anthropic.com/news/web-search' },
+      { label: 'Gemini', href: 'https://gemini.google/' },
+      { label: 'Copilot', href: 'https://copilot.microsoft.com/' },
+      { label: 'Grok', href: 'https://x.ai/' },
+      { label: 'Perplexity (built around it)', href: 'https://www.perplexity.ai/' },
+    ],
   },
   {
     name: 'Deep Research',
@@ -67,7 +80,12 @@ const features = [
     example:
       '"Build me a competitive landscape of US-based vertical SaaS companies with under 50 employees serving the construction industry. Include funding, headcount, and a one-line take on each." You get a footnoted report you can hand to a stakeholder.',
     examples_label: 'Available in',
-    examples_value: 'ChatGPT (Deep Research) · Gemini (Deep Research) · Perplexity (Deep Research) · Grok (DeepSearch)',
+    links: [
+      { label: 'ChatGPT (Deep Research)', href: 'https://openai.com/index/introducing-deep-research/' },
+      { label: 'Gemini (Deep Research)', href: 'https://blog.google/products/gemini/google-gemini-deep-research/' },
+      { label: 'Perplexity (Deep Research)', href: 'https://www.perplexity.ai/hub/blog/introducing-perplexity-deep-research' },
+      { label: 'Grok (DeepSearch)', href: 'https://x.ai/news/grok-3' },
+    ],
   },
   {
     name: 'Memory',
@@ -76,7 +94,12 @@ const features = [
     example:
       'Tell ChatGPT once that you write in plain language, prefer bullet lists, and work in higher ed. From then on, every new chat opens with that context already loaded — no preamble required.',
     examples_label: 'Available in',
-    examples_value: 'ChatGPT (Memory) · Claude (Project memory) · Gemini (Memory) · Grok',
+    links: [
+      { label: 'ChatGPT (Memory)', href: 'https://openai.com/index/memory-and-new-controls-for-chatgpt/' },
+      { label: 'Claude (Project memory)', href: 'https://www.anthropic.com/news/projects' },
+      { label: 'Gemini (Memory)', href: 'https://blog.google/products/gemini/google-gemini-personalization/' },
+      { label: 'Grok', href: 'https://x.ai/' },
+    ],
   },
   {
     name: 'Personalization',
@@ -85,7 +108,11 @@ const features = [
     example:
       'Tell Claude once: "I\'m a marketing director. Default to 200-word responses, skip the disclaimers, and challenge weak ideas instead of just agreeing." Every chat starts in that mode.',
     examples_label: 'Available in',
-    examples_value: 'ChatGPT (Custom Instructions) · Claude (System Prompts / Styles) · Gemini (Saved Info)',
+    links: [
+      { label: 'ChatGPT (Custom Instructions)', href: 'https://openai.com/index/custom-instructions-for-chatgpt/' },
+      { label: 'Claude (System Prompts / Styles)', href: 'https://www.anthropic.com/news/styles' },
+      { label: 'Gemini (Saved Info)', href: 'https://support.google.com/gemini/answer/15637730' },
+    ],
   },
   {
     name: 'Document Analysis',
@@ -94,7 +121,13 @@ const features = [
     example:
       'Upload a 60-page contract and ask: "summarize the obligations on us, list anything unusual compared to a standard MSA, and draft a redline I can send back."',
     examples_label: 'Available in',
-    examples_value: 'ChatGPT · Claude · Gemini · Copilot · Grok — typical limits: PDFs, Office docs, CSVs, audio',
+    links: [
+      { label: 'ChatGPT', href: 'https://chatgpt.com/' },
+      { label: 'Claude', href: 'https://claude.ai/' },
+      { label: 'Gemini', href: 'https://gemini.google.com/' },
+      { label: 'Copilot', href: 'https://copilot.microsoft.com/' },
+      { label: 'Grok', href: 'https://grok.com/' },
+    ],
   },
   {
     name: 'Image Analysis',
@@ -103,7 +136,14 @@ const features = [
     example:
       'Photograph a confusing nutrition label and ask "is this OK for someone on a low-FODMAP diet, and what are the worst ingredients?" Or paste a screenshot of an error message and ask what\'s wrong and how to fix it.',
     examples_label: 'Available in',
-    examples_value: 'Every major chat tool now sees images — ChatGPT, Claude, Gemini, Copilot, Grok',
+    prefix: 'Every major chat tool now sees images — ',
+    links: [
+      { label: 'ChatGPT', href: 'https://chatgpt.com/' },
+      { label: 'Claude', href: 'https://claude.ai/' },
+      { label: 'Gemini', href: 'https://gemini.google.com/' },
+      { label: 'Copilot', href: 'https://copilot.microsoft.com/' },
+      { label: 'Grok', href: 'https://grok.com/' },
+    ],
   },
   {
     name: 'Image Generation',
@@ -112,7 +152,13 @@ const features = [
     example:
       'Upload a phone photo of your living room and prompt "make it look like a Pacific Northwest cabin — wood walls, warm light, fewer cables." You get a preview good enough to share with a designer.',
     examples_label: 'Available in',
-    examples_value: 'ChatGPT (GPT-Image) · Gemini (Imagen / Nano Banana) · Midjourney · Flux · Adobe Firefly',
+    links: [
+      { label: 'ChatGPT (GPT-Image)', href: 'https://openai.com/index/introducing-4o-image-generation/' },
+      { label: 'Gemini (Imagen / Nano Banana)', href: 'https://blog.google/products/gemini/updated-image-editing-model/' },
+      { label: 'Midjourney', href: 'https://www.midjourney.com/' },
+      { label: 'Flux', href: 'https://blackforestlabs.ai/' },
+      { label: 'Adobe Firefly', href: 'https://firefly.adobe.com/' },
+    ],
   },
   {
     name: 'Voice Mode',
@@ -121,7 +167,12 @@ const features = [
     example:
       'Run a 20-minute mock interview while you walk the dog. The model plays a tough hiring manager, asks follow-ups, then debriefs you on what to tighten. No typing.',
     examples_label: 'Available in',
-    examples_value: 'ChatGPT (Advanced Voice) · Gemini Live · Claude (voice on mobile) · Grok (Voice Mode)',
+    links: [
+      { label: 'ChatGPT (Advanced Voice)', href: 'https://help.openai.com/en/articles/8400625-voice-mode-faq' },
+      { label: 'Gemini Live', href: 'https://gemini.google/overview/gemini-live/' },
+      { label: 'Claude (voice on mobile)', href: 'https://www.anthropic.com/news/claude-voice-mode' },
+      { label: 'Grok (Voice Mode)', href: 'https://x.ai/' },
+    ],
   },
   {
     name: 'Video Mode',
@@ -130,7 +181,24 @@ const features = [
     example:
       'Point your phone at a broken sprinkler valve and ask "what is this part and where do I get a replacement?" — the model identifies it on camera. Or generate a 10-second cinematic shot of a kayak gliding through fog with Veo or Sora.',
     examples_label: 'Available in',
-    examples_value: 'Live video: ChatGPT, Gemini Live · Generation: Sora (OpenAI), Veo (Google), Runway, Kling',
+    groups: [
+      {
+        label: 'Live video',
+        links: [
+          { label: 'ChatGPT', href: 'https://help.openai.com/en/articles/10119604-video-and-screensharing-on-chatgpt' },
+          { label: 'Gemini Live', href: 'https://gemini.google/overview/gemini-live/' },
+        ],
+      },
+      {
+        label: 'Generation',
+        links: [
+          { label: 'Sora (OpenAI)', href: 'https://sora.com/' },
+          { label: 'Veo (Google)', href: 'https://deepmind.google/models/veo/' },
+          { label: 'Runway', href: 'https://runwayml.com/' },
+          { label: 'Kling', href: 'https://www.klingai.com/' },
+        ],
+      },
+    ],
   },
   {
     name: 'Coding',
@@ -139,7 +207,14 @@ const features = [
     example:
       'Upload a messy CSV of sales data and ask "what were the top 5 products by margin in Q3, and chart them by week?" The model writes Python, runs it, and returns the numbers + a chart — no spreadsheet acrobatics.',
     examples_label: 'Available in',
-    examples_value: 'ChatGPT (Code Interpreter) · Claude (Analysis Tool, Claude Code) · Gemini · purpose-built: Cursor, Windsurf, GitHub Copilot',
+    links: [
+      { label: 'ChatGPT (Code Interpreter)', href: 'https://help.openai.com/en/articles/8077698-how-do-i-use-the-code-interpreter-tool' },
+      { label: 'Claude (Analysis Tool, Claude Code)', href: 'https://www.anthropic.com/claude-code' },
+      { label: 'Gemini', href: 'https://gemini.google.com/' },
+      { label: 'Cursor', href: 'https://cursor.com/' },
+      { label: 'Windsurf', href: 'https://windsurf.com/' },
+      { label: 'GitHub Copilot', href: 'https://github.com/features/copilot' },
+    ],
   },
   {
     name: 'Computer Use',
@@ -148,7 +223,11 @@ const features = [
     example:
       'Hand Claude a spreadsheet, ask it to open a browser-based BI tool, build a specific report, and save the result back to your folder. It drives the apps directly instead of telling you what to click.',
     examples_label: 'Available in',
-    examples_value: 'Claude (Computer Use) · ChatGPT (Operator) · Gemini (Project Mariner)',
+    links: [
+      { label: 'Claude (Computer Use)', href: 'https://www.anthropic.com/news/3-5-models-and-computer-use' },
+      { label: 'ChatGPT (Operator)', href: 'https://openai.com/index/introducing-operator/' },
+      { label: 'Gemini (Project Mariner)', href: 'https://deepmind.google/models/project-mariner/' },
+    ],
   },
   {
     name: 'Agent Mode',
@@ -157,7 +236,11 @@ const features = [
     example:
       '"Find me three flights from SEA to BOS next Friday under $400, in a comparison table, then add the best one to my calendar." The agent opens kayak.com, runs the searches, and (with permission) writes the calendar event.',
     examples_label: 'Available in',
-    examples_value: 'ChatGPT (Agent Mode) · Claude (Claude Code, Computer Use) · Gemini (Project Mariner)',
+    links: [
+      { label: 'ChatGPT (Agent Mode)', href: 'https://openai.com/index/introducing-chatgpt-agent/' },
+      { label: 'Claude (Claude Code, Computer Use)', href: 'https://www.anthropic.com/claude-code' },
+      { label: 'Gemini (Project Mariner)', href: 'https://deepmind.google/models/project-mariner/' },
+    ],
   },
   {
     name: 'Connectors & MCP',
@@ -166,7 +249,12 @@ const features = [
     example:
       'Connect Claude to your Notion workspace and Google Calendar, then ask: "look at my project plan in Notion, find this week\'s deadlines, and tell me which meetings on my calendar should be moved." It reads both directly — no copy-paste.',
     examples_label: 'Available in',
-    examples_value: 'Claude (Connectors / MCP) · ChatGPT (Connectors) · Gemini (Workspace integrations) · custom via MCP servers',
+    links: [
+      { label: 'Claude (Connectors / MCP)', href: 'https://www.anthropic.com/news/integrations' },
+      { label: 'ChatGPT (Connectors)', href: 'https://help.openai.com/en/articles/11487775-connectors-in-chatgpt' },
+      { label: 'Gemini (Workspace integrations)', href: 'https://workspace.google.com/solutions/ai/' },
+      { label: 'MCP spec', href: 'https://modelcontextprotocol.io/' },
+    ],
   },
   {
     name: 'Skills',
@@ -175,7 +263,10 @@ const features = [
     example:
       'Install a "Brand Voice" skill that knows your style guide, tone, and forbidden words. From then on you can say "draft this announcement using brand-voice" and it produces on-brand copy without re-explaining the rules each time.',
     examples_label: 'Available in',
-    examples_value: 'Claude (Skills) · ChatGPT (GPTs play a similar role) · custom skill libraries are emerging across the major tools',
+    links: [
+      { label: 'Claude (Skills)', href: 'https://www.anthropic.com/news/skills' },
+      { label: 'ChatGPT (GPTs play a similar role)', href: 'https://openai.com/index/introducing-gpts/' },
+    ],
   },
   {
     name: 'Projects',
@@ -184,7 +275,12 @@ const features = [
     example:
       'Create a "Q4 Board Deck" project, drop in last quarter\'s deck, the financial model, and a rubric for what good slides look like. Any chat in that project already knows your goals, history, and constraints.',
     examples_label: 'Available in',
-    examples_value: 'Claude (Projects) · ChatGPT (Projects) · Gemini (Gems) · Notion AI',
+    links: [
+      { label: 'Claude (Projects)', href: 'https://www.anthropic.com/news/projects' },
+      { label: 'ChatGPT (Projects)', href: 'https://help.openai.com/en/articles/10169521-using-projects-in-chatgpt' },
+      { label: 'Gemini (Gems)', href: 'https://gemini.google/overview/gems/' },
+      { label: 'Notion AI', href: 'https://www.notion.com/product/ai' },
+    ],
   },
 ];
 ---
@@ -215,19 +311,37 @@ const features = [
   <div class="two-col" style="grid-template-columns: 1fr 1fr;">
     <div>
       <h4 style="color: var(--brand-blue); margin: 0 0 14px 0;">General-Purpose Tools</h4>
-      <ul class="arrow-list">
-        {generalTools.map((t) => <li><strong>{t.name}</strong> — {t.vendor}</li>)}
+      <ul class="tool-list">
+        {generalTools.map((t) => (
+          <li>
+            {t.slug ? (
+              <img src={`https://cdn.simpleicons.org/${t.slug}/0066cc`} alt="" class="tool-logo" width="22" height="22" loading="lazy" />
+            ) : (
+              <span class="tool-logo tool-logo--fallback" aria-hidden="true">{t.name[0]}</span>
+            )}
+            <span><strong>{t.name}</strong> — {t.vendor}</span>
+          </li>
+        ))}
       </ul>
     </div>
     <div>
       <h4 style="color: var(--brand-blue); margin: 0 0 14px 0;">Specialized Tools</h4>
-      <ul class="arrow-list">
-        {specializedTools.map((t) => <li><strong>{t.name}</strong> — {t.purpose}</li>)}
+      <ul class="tool-list">
+        {specializedTools.map((t) => (
+          <li>
+            {t.slug ? (
+              <img src={`https://cdn.simpleicons.org/${t.slug}/0066cc`} alt="" class="tool-logo" width="22" height="22" loading="lazy" />
+            ) : (
+              <span class="tool-logo tool-logo--fallback" aria-hidden="true">{t.name[0]}</span>
+            )}
+            <span><strong>{t.name}</strong> — {t.purpose}</span>
+          </li>
+        ))}
       </ul>
     </div>
   </div>
 
-  <h3>What Model Should I Use?</h3>
+  <h3>Different Modes</h3>
   <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
     {modes.map((m) => (
       <div class="card">
@@ -237,8 +351,17 @@ const features = [
     ))}
   </div>
 
-  <h3>Tools &amp; Features to Know</h3>
-  <p>Today's AI assistants are no longer just text-in / text-out. These are the features that matter most — what each one is, when to reach for it, and where to find it.</p>
+  <h3>Tools &amp; Features</h3>
+  <figure class="slide-figure">
+    <img
+      src="/images/tools-and-features.png"
+      alt="Tools and Features overview slide from the Practical AI talk."
+      loading="lazy"
+      width="1600"
+      height="900"
+    />
+  </figure>
+  <p style="margin-top: 30px;">Today's AI assistants are no longer just text-in / text-out. These are the features that matter most — what each one is, when to reach for it, and where to find it.</p>
 
   <div class="feature-list">
     {features.map((f, idx) => (
@@ -248,7 +371,33 @@ const features = [
           <h4>{f.name}</h4>
           <p class="feature-def">{f.definition}</p>
           <p class="feature-example"><strong>Example:</strong> {f.example}</p>
-          <p class="feature-where"><strong>{f.examples_label}:</strong> {f.examples_value}</p>
+          <p class="feature-where">
+            <strong>{f.examples_label}:</strong>{' '}
+            {f.groups ? (
+              f.groups.map((g, gi) => (
+                <>
+                  {gi > 0 && <span class="group-sep"> · </span>}
+                  <span class="group-label">{g.label}:</span>{' '}
+                  {g.links.map((l, li) => (
+                    <>
+                      {li > 0 && <span class="link-sep"> · </span>}
+                      <a href={l.href} target="_blank" rel="noopener noreferrer" class="feature-link">{l.label}</a>
+                    </>
+                  ))}
+                </>
+              ))
+            ) : (
+              <>
+                {f.prefix}
+                {f.links.map((l, li) => (
+                  <>
+                    {li > 0 && <span class="link-sep"> · </span>}
+                    <a href={l.href} target="_blank" rel="noopener noreferrer" class="feature-link">{l.label}</a>
+                  </>
+                ))}
+              </>
+            )}
+          </p>
         </div>
       </article>
     ))}
@@ -256,6 +405,33 @@ const features = [
 </Section>
 
 <style>
+  .tool-list { list-style: none; margin: 30px 0; padding: 0; }
+  .tool-list li {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 18px;
+    color: var(--dark-gray);
+  }
+  .tool-logo {
+    width: 22px;
+    height: 22px;
+    flex: 0 0 22px;
+    object-fit: contain;
+  }
+  .tool-logo--fallback {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--brand-blue);
+    color: white;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 700;
+  }
+
   .feature-list {
     display: flex;
     flex-direction: column;
@@ -303,8 +479,31 @@ const features = [
   .feature-where {
     color: var(--med-gray);
     font-size: 14px;
-    line-height: 1.6;
+    line-height: 1.7;
     margin: 0;
+  }
+  .feature-link {
+    color: var(--brand-blue);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(0, 102, 204, 0.3);
+    transition: border-color 0.15s ease, color 0.15s ease;
+  }
+  .feature-link:hover {
+    color: #004999;
+    border-bottom-color: var(--brand-blue);
+  }
+  .feature-link:focus-visible {
+    outline: 2px solid var(--brand-blue);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+  .group-label {
+    color: var(--dark-gray);
+    font-weight: 600;
+  }
+  .link-sep,
+  .group-sep {
+    color: var(--med-gray);
   }
   .feature-where strong {
     color: var(--brand-blue);
