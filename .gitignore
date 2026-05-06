@@ -27,3 +27,4 @@ pnpm-debug.log*
 
 # local-only deck assets (raw extraction; curated copies live in public/images)
 _deck-assets/
+.env*.local
