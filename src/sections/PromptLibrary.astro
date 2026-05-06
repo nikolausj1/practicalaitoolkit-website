@@ -1,0 +1,315 @@
+---
+import Section from '../components/Section.astro';
+
+const categories = [
+  {
+    label: 'Writing',
+    prompts: [
+      {
+        title: 'Email reply that sounds like you',
+        body: `You are an editor who writes in a clear, warm, no-fluff voice — short sentences, contractions OK, no corporate hedging. Below is an email I received and a rough draft of my reply. Rewrite my reply in that voice. Keep my actual points; tighten the wording, cut throat-clearing, and end with a clear next step. Return only the rewritten email.
+
+EMAIL I RECEIVED:
+[paste]
+
+MY DRAFT REPLY:
+[paste]`,
+      },
+      {
+        title: 'Tighten this paragraph',
+        body: `You are a ruthless line editor. Cut filler, replace weak verbs, remove throat-clearing, and shorten wherever possible without losing meaning. Keep the original tone. Return: (1) the tightened version, (2) a short bullet list of what you cut and why.
+
+PARAGRAPH:
+[paste]`,
+      },
+      {
+        title: 'Translate into plain language',
+        body: `Rewrite the text below for a smart but non-expert reader. No jargon — if a technical term is essential, define it inline. Aim for short sentences and concrete examples. Preserve every fact; do not add new claims. Return only the rewritten version.
+
+TEXT:
+[paste]`,
+      },
+    ],
+  },
+  {
+    label: 'Meetings',
+    prompts: [
+      {
+        title: 'Pre-meeting brief',
+        body: `You are my chief of staff. I have a meeting with [name/role] in [time] about [topic]. Based on the notes below (and any recent context you have), give me:
+1. A one-line goal for the meeting
+2. The 3 questions I should ask
+3. The 2 most likely points of pushback and how I'd handle each
+4. One thing I should NOT bring up
+
+NOTES / CONTEXT:
+[paste]`,
+      },
+      {
+        title: 'Summarize meeting notes into actions',
+        body: `Read the meeting notes below. Produce two outputs:
+1. A 5-bullet executive summary
+2. An action list with columns: owner, action, due date (use "TBD" if not mentioned)
+
+Don't invent owners or deadlines. If the notes are ambiguous, flag it instead of guessing.
+
+NOTES:
+[paste]`,
+      },
+      {
+        title: 'Draft a follow-up email',
+        body: `Below are my notes from a meeting with [name]. Draft a follow-up email from me to them that: thanks them, summarizes what was decided in 3 short bullets, names the next concrete step with an owner and date, and ends with a clear question. Match my voice — direct, friendly, no jargon. Keep it under 150 words.
+
+NOTES:
+[paste]`,
+      },
+    ],
+  },
+  {
+    label: 'Strategy & analysis',
+    prompts: [
+      {
+        title: 'Steelman the other side',
+        body: `I'm leaning toward [decision/position]. Steelman the strongest case AGAINST it — not strawman objections, the most rigorous version a smart critic would actually make. Give me 4–6 points, each with a one-sentence rebuttal I'd need to have ready. End with: "If you only address one of these, address [X]" and explain why.
+
+CONTEXT:
+[paste]`,
+      },
+      {
+        title: 'Pre-mortem on a decision',
+        body: `It's six months from now and the decision below failed. Walk me through the most likely failure mode: what specifically went wrong, what early signals would have warned us, and what we should change about the plan now to avoid it. Be concrete; no generic risk-register filler.
+
+DECISION:
+[paste]`,
+      },
+      {
+        title: 'Compare options on the criteria that matter',
+        body: `I'm choosing between [option A], [option B], and [option C] for [purpose]. The criteria I actually care about are [list]. Build a comparison table: rows = criteria, columns = options. In each cell, give a short verdict (1–2 sentences) — not a score. End with a one-paragraph recommendation that names tradeoffs explicitly.
+
+CONTEXT:
+[paste]`,
+      },
+    ],
+  },
+  {
+    label: 'Documents',
+    prompts: [
+      {
+        title: 'Contract risk scan',
+        body: `You are a careful contract reviewer (not a lawyer). Read the contract attached. Output:
+1. A 5-bullet plain-language summary of what we're agreeing to
+2. The 3 clauses most likely to bite us, with the exact quoted text and why it matters
+3. Anything that looks unusual compared to a standard [agreement type]
+4. A list of questions to ask before signing
+
+I am the [your role/company]. Counterparty is [their role/company].`,
+      },
+      {
+        title: 'Compare two documents',
+        body: `Compare the two documents attached. Produce: (1) a one-paragraph summary of the key differences, (2) a side-by-side table of every meaningful change, (3) a flag list of any change a reasonable reader might miss. Quote exact text in the comparison cells.`,
+      },
+      {
+        title: 'Summarize a long PDF for an exec',
+        body: `Summarize the attached document for a busy executive who has 60 seconds. Format:
+- One-sentence TL;DR
+- 3 bullets of the most important findings
+- 2 bullets on what the exec needs to decide or do
+- One quote (with page number) that captures the document's heart
+
+No fluff. No "in conclusion." Cut anything that doesn't pay rent.`,
+      },
+    ],
+  },
+  {
+    label: 'Slides & presentations',
+    prompts: [
+      {
+        title: 'Outline a deck from a brief',
+        body: `Outline a [length]-minute presentation for [audience] on [topic]. Output a slide-by-slide list with a title, a one-sentence purpose, and 3–5 bullet points of content per slide. Keep cognitive load light — each slide should make one point. Open strong (a question or surprise), not with an agenda slide.
+
+BRIEF:
+[paste]`,
+      },
+      {
+        title: 'Tighten my slide titles',
+        body: `Below are slide titles from my deck. Rewrite each as a short, declarative sentence that states the slide's single takeaway — not its topic. ("Q3 Revenue" → "Q3 revenue grew 22%, driven by enterprise.") Keep my voice; cut hedges. Return as a numbered list matching my input order.
+
+TITLES:
+[paste]`,
+      },
+    ],
+  },
+  {
+    label: 'Coding & data',
+    prompts: [
+      {
+        title: 'Explain this code',
+        body: `Below is a piece of code. Explain it to a competent engineer who didn't write it: what it does at a high level, the key control flow, anything subtle or non-obvious, and any bugs or smells you notice. Use specific line references. Don't paraphrase the code; explain it.
+
+CODE:
+[paste]`,
+      },
+      {
+        title: 'Pull insights from a messy CSV',
+        body: `Attached is a CSV. The columns are [list], roughly representing [domain]. I want to know:
+- [question 1]
+- [question 2]
+- Anything else interesting you notice
+
+Do the analysis in code (you can run Python). Output: the answer to each question with a number and a one-sentence interpretation, plus one chart for any finding that deserves a picture. If the data is too messy to answer something, say so — don't fudge.`,
+      },
+    ],
+  },
+];
+---
+<Section id="prompt-library" number="06" title="Prompt Library" band="dark">
+  <p>
+    Copy-paste prompts you can use today. Each one starts with role and task, gives the model the context
+    it needs, and tells it the format you want back — the RTCF framework in action. Replace the
+    <code>[bracketed bits]</code> with your own details.
+  </p>
+
+  <div class="prompt-grid">
+    {categories.map((cat) => (
+      <div class="prompt-cat">
+        <h4 class="prompt-cat-title">{cat.label}</h4>
+        <div class="prompt-cards">
+          {cat.prompts.map((p) => (
+            <article class="prompt-card">
+              <header class="prompt-card-head">
+                <h5>{p.title}</h5>
+                <button class="copy-btn" type="button" data-copy data-label="Copy" data-success="Copied!">
+                  <span class="copy-btn-text">Copy</span>
+                </button>
+              </header>
+              <pre class="prompt-card-body"><code>{p.body}</code></pre>
+            </article>
+          ))}
+        </div>
+      </div>
+    ))}
+  </div>
+</Section>
+
+<script>
+  const buttons = document.querySelectorAll<HTMLButtonElement>('button[data-copy]');
+  buttons.forEach((btn) => {
+    btn.addEventListener('click', async () => {
+      const card = btn.closest('article.prompt-card');
+      const code = card?.querySelector('code')?.textContent ?? '';
+      try {
+        await navigator.clipboard.writeText(code);
+        const text = btn.querySelector('.copy-btn-text');
+        if (text) text.textContent = btn.dataset.success ?? 'Copied!';
+        btn.classList.add('copy-btn--success');
+        window.setTimeout(() => {
+          if (text) text.textContent = btn.dataset.label ?? 'Copy';
+          btn.classList.remove('copy-btn--success');
+        }, 1600);
+      } catch (e) {
+        const text = btn.querySelector('.copy-btn-text');
+        if (text) text.textContent = 'Press Cmd+C';
+      }
+    });
+  });
+</script>
+
+<style>
+  .prompt-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+    margin: 40px 0 0 0;
+  }
+  .prompt-cat-title {
+    font-size: 14px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--brand-blue);
+    font-weight: 700;
+    margin: 0 0 18px 0;
+  }
+  .prompt-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+    gap: 18px;
+  }
+  .prompt-card {
+    background: #ffffff;
+    border: 1px solid rgba(0, 102, 204, 0.25);
+    border-left: 4px solid var(--brand-blue);
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 16px rgba(0, 31, 63, 0.18);
+  }
+  .prompt-card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 18px;
+    border-bottom: 1px solid rgba(0, 102, 204, 0.18);
+    background: rgba(0, 102, 204, 0.05);
+  }
+  .prompt-card-head h5 {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--dark-gray);
+    line-height: 1.3;
+  }
+  .copy-btn {
+    border: 1px solid rgba(0, 102, 204, 0.5);
+    background: white;
+    color: var(--brand-blue);
+    padding: 6px 12px;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+    flex-shrink: 0;
+  }
+  .copy-btn:hover {
+    background: var(--brand-blue);
+    border-color: var(--brand-blue);
+    color: white;
+  }
+  .copy-btn--success {
+    background: rgba(0, 153, 76, 0.12);
+    border-color: rgba(0, 153, 76, 0.6);
+    color: #008142;
+  }
+  .copy-btn--success:hover {
+    background: rgba(0, 153, 76, 0.12);
+    color: #008142;
+  }
+  .prompt-card-body {
+    margin: 0;
+    padding: 16px 18px;
+    background: #ffffff;
+    color: var(--dark-gray);
+    font-family: 'SF Mono', Menlo, Consolas, monospace;
+    font-size: 13px;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    flex: 1;
+    overflow-x: auto;
+  }
+  .prompt-card-body code {
+    background: transparent;
+    color: inherit;
+    padding: 0;
+    font-family: inherit;
+    font-size: inherit;
+  }
+
+  @media (max-width: 600px) {
+    .prompt-cards { grid-template-columns: 1fr; }
+  }
+</style>

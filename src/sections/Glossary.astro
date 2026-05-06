@@ -1,0 +1,170 @@
+---
+import Section from '../components/Section.astro';
+
+const terms = [
+  {
+    term: 'LLM (Large Language Model)',
+    definition:
+      'The neural network behind ChatGPT, Claude, Gemini, and similar tools. Trained on huge amounts of text to predict the next word, which — at scale — turns into reading, writing, reasoning, and coding ability.',
+  },
+  {
+    term: 'Token',
+    definition:
+      'The unit of text a model reads and writes — roughly a chunk of three or four characters or about three-quarters of a word. "AI" is one token; "antidisestablishment" is several. Pricing and context limits are usually measured in tokens.',
+  },
+  {
+    term: 'Context Window',
+    definition:
+      'The maximum amount of text the model can hold in mind at once — the prompt plus the response plus any attachments. Once you exceed it, earliest content gets dropped. Modern windows range from ~32k to 1M+ tokens.',
+  },
+  {
+    term: 'Prompt',
+    definition:
+      'Whatever you send to the model — a question, an instruction, a document, an image. The quality of your prompt is the single biggest factor in the quality of the response.',
+  },
+  {
+    term: 'System Prompt',
+    definition:
+      'A persistent instruction the tool applies before every message in a conversation, setting role, tone, or rules. Custom Instructions, Claude Styles, and Gemini Saved Info are flavors of this.',
+  },
+  {
+    term: 'Hallucination',
+    definition:
+      'When the model confidently states something false. Names, citations, statistics, and quotes are the most common offenders. The fix isn\'t trust — it\'s verification, web search, or grounding the answer in a document you provided.',
+  },
+  {
+    term: 'Grounding',
+    definition:
+      'Tying the model\'s answer to a specific source — a document you uploaded, a search result, a database. Grounded answers cite back to the source, dramatically reducing hallucinations.',
+  },
+  {
+    term: 'RAG (Retrieval-Augmented Generation)',
+    definition:
+      'A pattern where the system first searches a knowledge base for relevant chunks, then hands those to the model along with your question. How most "chat with your documents" features work under the hood.',
+  },
+  {
+    term: 'Fine-tuning',
+    definition:
+      'Further training of a model on a custom dataset to specialize it. Less common than it used to be — for most tasks, prompting and RAG do the job without the cost of fine-tuning.',
+  },
+  {
+    term: 'Inference',
+    definition:
+      'A single run of the model — your prompt in, the model\'s answer out. "Inference cost" is what you pay per call; "inference latency" is how long the model takes to respond.',
+  },
+  {
+    term: 'Reasoning / Thinking Model',
+    definition:
+      'A model that visibly works through a problem step-by-step before answering, trading time for accuracy on complex tasks. Claude Extended Thinking, ChatGPT o-series, Gemini Deep Think, Grok Think.',
+  },
+  {
+    term: 'Agent',
+    definition:
+      'A model setup that doesn\'t just respond — it plans, takes actions, observes results, and iterates. Think "the AI books the flight" rather than "the AI tells you which flight to book."',
+  },
+  {
+    term: 'Tool Use / Function Calling',
+    definition:
+      'The model\'s ability to call external tools (a search engine, a calculator, your calendar API) instead of guessing. The mechanism that turns a chat model into an agent.',
+  },
+  {
+    term: 'MCP (Model Context Protocol)',
+    definition:
+      'An open standard for connecting AI assistants to outside data sources and tools — Gmail, Notion, Slack, GitHub, your database. Anthropic introduced it; most major vendors now support it.',
+  },
+  {
+    term: 'Multimodal',
+    definition:
+      'A model that handles more than just text — images, audio, video, code. Modern flagships (GPT-5, Claude 4, Gemini 2.5) are all multimodal in and out.',
+  },
+  {
+    term: 'Embedding',
+    definition:
+      'A numerical representation of a chunk of text that captures its meaning. Two pieces of text with similar meaning have similar embeddings. The math behind semantic search and most RAG systems.',
+  },
+  {
+    term: 'Temperature',
+    definition:
+      'A knob that controls how predictable the model\'s output is. Low temperature = same answer every time, sticks to safe choices. Higher temperature = more variety, more creativity, more risk of weirdness.',
+  },
+  {
+    term: 'Knowledge Cutoff',
+    definition:
+      'The date the model\'s training data ends. Without web search, the model genuinely doesn\'t know about anything that happened after that date — and may confidently make things up if you ask.',
+  },
+  {
+    term: 'Prompt Injection',
+    definition:
+      'A class of attacks where hostile instructions are hidden in content the model reads (a webpage, an email, a PDF) and tries to override what you actually asked. Why agents and connectors are designed cautiously.',
+  },
+  {
+    term: 'Open Weights vs. Closed Weights',
+    definition:
+      'Open-weights models (Llama, DeepSeek, Mistral) have their parameters published — you can run them yourself. Closed-weights models (GPT, Claude, Gemini) are accessed only through the vendor\'s API or product.',
+  },
+  {
+    term: 'Vibe-coding',
+    definition:
+      'Building software primarily by describing what you want in natural language to an AI coding tool, accepting and iterating on what it produces, rather than writing each line yourself. Cursor, Claude Code, GitHub Copilot are common stacks.',
+  },
+];
+---
+<Section id="glossary" number="07" title="Glossary" band="light">
+  <p>
+    The vocabulary you'll hit when you read about AI in the wild — terms used in product release notes,
+    tech press, and water-cooler conversations. Skim it once; come back when something doesn't make sense.
+  </p>
+
+  <dl class="glossary">
+    {terms.map((t) => (
+      <div class="glossary-entry">
+        <dt>{t.term}</dt>
+        <dd>{t.definition}</dd>
+      </div>
+    ))}
+  </dl>
+</Section>
+
+<style>
+  .glossary {
+    margin: 30px 0 0 0;
+    padding: 0;
+    display: grid;
+    gap: 0;
+    border-top: 1px solid rgba(0, 102, 204, 0.18);
+  }
+  .glossary-entry {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 32px;
+    padding: 22px 0;
+    border-bottom: 1px solid rgba(0, 102, 204, 0.18);
+    align-items: start;
+  }
+  .glossary-entry dt {
+    font-weight: 700;
+    color: var(--brand-blue);
+    font-size: 17px;
+    line-height: 1.35;
+    margin: 0;
+  }
+  .glossary-entry dd {
+    margin: 0;
+    color: var(--dark-gray);
+    font-size: 16px;
+    line-height: 1.7;
+  }
+
+  @media (max-width: 720px) {
+    .glossary-entry {
+      grid-template-columns: 1fr;
+      gap: 6px;
+    }
+    .glossary-entry dt {
+      font-size: 16px;
+    }
+    .glossary-entry dd {
+      font-size: 15px;
+    }
+  }
+</style>
