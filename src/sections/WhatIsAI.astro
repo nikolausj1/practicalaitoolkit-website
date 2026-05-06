@@ -315,7 +315,7 @@ const features = [
         {generalTools.map((t) => (
           <li>
             {t.slug ? (
-              <img src={`https://cdn.simpleicons.org/${t.slug}/0066cc`} alt="" class="tool-logo" width="22" height="22" loading="lazy" />
+              <img src={`https://cdn.simpleicons.org/${t.slug}/0066cc`} alt="" class="tool-logo" width="22" height="22" loading="eager" />
             ) : (
               <span class="tool-logo tool-logo--fallback" aria-hidden="true">{t.name[0]}</span>
             )}
@@ -330,7 +330,7 @@ const features = [
         {specializedTools.map((t) => (
           <li>
             {t.slug ? (
-              <img src={`https://cdn.simpleicons.org/${t.slug}/0066cc`} alt="" class="tool-logo" width="22" height="22" loading="lazy" />
+              <img src={`https://cdn.simpleicons.org/${t.slug}/0066cc`} alt="" class="tool-logo" width="22" height="22" loading="eager" />
             ) : (
               <span class="tool-logo tool-logo--fallback" aria-hidden="true">{t.name[0]}</span>
             )}
