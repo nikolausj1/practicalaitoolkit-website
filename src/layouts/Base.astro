@@ -1,6 +1,8 @@
 ---
 import '../styles/global.css';
 import BackgroundNetwork from '../components/BackgroundNetwork.astro';
+import Analytics from '@vercel/analytics/astro';
+import SpeedInsights from '@vercel/speed-insights/astro';
 
 interface Props {
   title?: string;
@@ -57,6 +59,8 @@ const ogImage = new URL('/og-image.jpg', Astro.site).toString();
     <div class="content">
       <slot />
     </div>
+    <Analytics />
+    <SpeedInsights />
 
     <script is:inline>
       // Reveal-on-scroll. Engages only after JS confirms it can manage visibility,
