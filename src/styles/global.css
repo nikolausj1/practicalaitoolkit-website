@@ -242,9 +242,10 @@ ul.arrow-list li::before {
 
 /* Code-style callout for prompts */
 .prompt-block {
-  background: rgba(0, 31, 63, 0.65);
-  color: rgba(255, 255, 255, 0.92);
+  background: #ffffff;
+  color: var(--dark-gray);
   padding: 24px 28px;
+  border: 1px solid rgba(0, 102, 204, 0.2);
   border-left: 4px solid var(--brand-blue);
   border-radius: 6px;
   font-family: 'SF Mono', Menlo, Consolas, monospace;
@@ -253,11 +254,28 @@ ul.arrow-list li::before {
   margin: 24px 0;
   white-space: pre-wrap;
   word-wrap: break-word;
+  box-shadow: 0 4px 16px rgba(0, 31, 63, 0.05);
 }
 
 .band-light .prompt-block {
-  background: #0b1a2e;
-  color: rgba(255, 255, 255, 0.92);
+  background: #ffffff;
+  color: var(--dark-gray);
+}
+
+/* Slide image figure (used to embed deck slides as page visuals) */
+.slide-figure {
+  margin: 30px 0 0 0;
+  padding: 0;
+  background: white;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 102, 204, 0.2);
+  box-shadow: 0 8px 30px rgba(0, 31, 63, 0.08);
+  overflow: hidden;
+}
+.slide-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 /* Sticky section-jump nav */
