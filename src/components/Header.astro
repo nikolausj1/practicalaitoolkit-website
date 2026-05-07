@@ -1,0 +1,197 @@
+---
+const links = [
+  { href: '#what-is-ai', label: 'What is AI' },
+  { href: '#when-to-use', label: 'When to Use' },
+  { href: '#how-to-use', label: 'How to Use' },
+  { href: '#prompting-tips', label: 'Prompting' },
+  { href: '#beyond-prompting', label: 'Beyond' },
+  { href: '#prompt-library', label: 'Library' },
+  { href: '#glossary', label: 'Glossary' },
+  { href: '#faq', label: 'FAQ' },
+  { href: '#about', label: 'About' },
+];
+---
+<header class="site-header" data-pos="top">
+  <div class="site-header-inner">
+    <a href="#hero" class="brand" aria-label="Practical AI Toolkit — top">
+      <span class="brand-text">Practical AI Toolkit</span>
+    </a>
+    <nav class="primary-nav" aria-label="Primary">
+      {links.map((l) => <a href={l.href}>{l.label}</a>)}
+    </nav>
+    <a href="#hero-email" class="cta-subscribe">Subscribe</a>
+  </div>
+</header>
+
+<script>
+  const header = document.querySelector<HTMLElement>('.site-header');
+  if (header) {
+    let ticking = false;
+    const update = () => {
+      header.dataset.pos = window.scrollY > 40 ? 'scrolled' : 'top';
+      ticking = false;
+    };
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        window.requestAnimationFrame(update);
+        ticking = true;
+      }
+    }, { passive: true });
+    update();
+
+    const navLinks = Array.from(header.querySelectorAll<HTMLAnchorElement>('.primary-nav a[href^="#"]'));
+    const sectionEls = navLinks
+      .map((a) => {
+        const id = a.getAttribute('href')?.slice(1);
+        return id ? document.getElementById(id) : null;
+      })
+      .filter((el): el is HTMLElement => el !== null);
+
+    const setActive = (id: string | null) => {
+      navLinks.forEach((a) => {
+        const matches = id !== null && a.getAttribute('href') === `#${id}`;
+        if (matches) a.dataset.active = 'true';
+        else delete a.dataset.active;
+      });
+    };
+
+    if ('IntersectionObserver' in window && sectionEls.length) {
+      const visible = new Map<string, number>();
+      const observer = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (entry.isIntersecting) {
+              visible.set(entry.target.id, entry.intersectionRatio);
+            } else {
+              visible.delete(entry.target.id);
+            }
+          }
+          let topId: string | null = null;
+          let topRatio = -1;
+          for (const [id, ratio] of visible) {
+            if (ratio > topRatio) {
+              topId = id;
+              topRatio = ratio;
+            }
+          }
+          setActive(topId);
+        },
+        { rootMargin: '-40% 0px -55% 0px', threshold: [0, 0.25, 0.5, 0.75, 1] }
+      );
+      sectionEls.forEach((el) => observer.observe(el));
+    }
+
+    // The Subscribe button scrolls to the hero email form and focuses it.
+    const subscribeBtn = header.querySelector<HTMLAnchorElement>('.cta-subscribe');
+    subscribeBtn?.addEventListener('click', (e) => {
+      const input = document.getElementById('hero-email') as HTMLInputElement | null;
+      if (input) {
+        // Allow the default anchor jump to fire, then focus.
+        window.setTimeout(() => input.focus({ preventScroll: false }), 350);
+      }
+    });
+  }
+</script>
+
+<style>
+  .site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    background: rgba(0, 20, 40, 0.55);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .site-header[data-pos='scrolled'] {
+    background: rgba(0, 20, 40, 0.85);
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25);
+  }
+
+  .site-header-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 12px 32px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: white;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: -0.005em;
+    flex-shrink: 0;
+  }
+  .brand-mark {
+    height: 22px;
+    width: auto;
+    aspect-ratio: 244 / 359;
+    filter: brightness(0) invert(1) opacity(0.95);
+  }
+  .brand-text { white-space: nowrap; }
+
+  .primary-nav {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 22px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .primary-nav::-webkit-scrollbar { display: none; }
+
+  .primary-nav a {
+    color: rgba(255, 255, 255, 0.72);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 6px 2px;
+    border-bottom: 2px solid transparent;
+    transition: color 0.15s ease, border-color 0.15s ease;
+    white-space: nowrap;
+  }
+  .primary-nav a:hover { color: white; }
+  .primary-nav a[data-active='true'] {
+    color: white;
+    border-bottom-color: var(--brand-blue);
+  }
+
+  .cta-subscribe {
+    flex-shrink: 0;
+    background: var(--brand-blue);
+    color: white;
+    text-decoration: none;
+    padding: 9px 18px;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.01em;
+    transition: background 0.15s ease, transform 0.15s ease;
+  }
+  .cta-subscribe:hover { background: #0077e6; transform: translateY(-1px); }
+
+  @media (max-width: 900px) {
+    .site-header-inner { padding: 10px 18px; gap: 14px; }
+    .primary-nav { gap: 14px; }
+    .primary-nav a { font-size: 12px; }
+    .brand-text { display: none; }
+    .cta-subscribe { padding: 7px 14px; font-size: 13px; }
+  }
+
+  @media (max-width: 640px) {
+    .primary-nav { display: none; }
+    .site-header-inner { justify-content: space-between; }
+  }
+</style>

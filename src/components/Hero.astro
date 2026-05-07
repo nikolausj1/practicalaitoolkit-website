@@ -1,18 +1,19 @@
 ---
-// Hero section: the talk title + subhead + compact email capture + scroll cue.
+// Hero — text on the left, full-bleed background image (lightbulb is baked in on the right).
 ---
 <div class="hero" id="hero">
   <div class="hero-content">
     <div class="hero-text">
       <p class="hero-eyebrow">Companion site for the Practical AI talk</p>
-      <h1>Practical AI</h1>
-      <h2>Use AI confidently. Today.</h2>
-      <div class="subtitle">
+      <h1>
+        <img class="hero-mark" src="/images/practical-ai-bulb.png" alt="" loading="eager" />
+        <span>Practical AI</span>
+      </h1>
+      <p class="subtitle">
         A plain-language guide to what AI is, when to use it, and how to get great results.
-      </div>
+      </p>
 
       <form class="hero-signup" id="hero-signup" novalidate>
-        <label class="hero-signup-label" for="hero-email">Get a short note when something's worth knowing</label>
         <div class="hero-signup-row">
           <input
             id="hero-email"
@@ -22,23 +23,21 @@
             placeholder="you@example.com"
             autocomplete="email"
             inputmode="email"
+            aria-label="Email address"
           />
-          <button type="submit" id="hero-signup-btn">Subscribe</button>
+          <button type="submit" id="hero-signup-btn">Get a short note</button>
         </div>
+        <p class="hero-signup-fineprint">5 min reads. Unsubscribe anytime.</p>
         <p class="hero-signup-status" id="hero-signup-status" role="status" aria-live="polite"></p>
       </form>
-
-      <a class="hero-scroll-cue" href="#what-is-ai" aria-label="Jump to first section">
-        <svg class="hero-chevron" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <polyline points="6 9 12 15 18 9"></polyline>
-        </svg>
-      </a>
-    </div>
-
-    <div class="hero-visual" aria-hidden="true">
-      <img src="/images/practical-ai-bulb.png" alt="" width="380" height="380" loading="eager" />
     </div>
   </div>
+
+  <a class="hero-scroll-cue" href="#what-is-ai" aria-label="Jump to first section">
+    <svg class="hero-chevron" width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <polyline points="6 9 12 15 18 9"></polyline>
+    </svg>
+  </a>
 </div>
 
 <script>
@@ -46,6 +45,7 @@
   const input = document.getElementById('hero-email') as HTMLInputElement | null;
   const button = document.getElementById('hero-signup-btn') as HTMLButtonElement | null;
   const status = document.getElementById('hero-signup-status');
+  const fineprint = document.querySelector<HTMLElement>('.hero-signup-fineprint');
 
   if (form && input && button && status) {
     form.addEventListener('submit', async (e) => {
@@ -67,6 +67,7 @@
         }
         status.textContent = "You're in. Thanks.";
         status.classList.add('hero-signup-status--ok');
+        if (fineprint) fineprint.style.display = 'none';
         form.reset();
       } catch (err) {
         status.textContent =
@@ -83,77 +84,168 @@
 
 <style>
   .hero {
+    position: relative;
+    min-height: 100vh;
     display: flex;
     align-items: center;
-    justify-content: center;
-    min-height: 80vh;
-    padding: 120px 40px;
-    position: relative;
-    background: linear-gradient(135deg, #001f3f 0%, #002a55 60%, #001428 100%);
+    padding: 120px 40px 80px; /* extra top padding to clear the fixed header */
+    /* Fallback color while the image loads / for unsupported clients */
+    background-color: #001428;
+    background-image:
+      image-set(
+        url('/images/hero-bg.webp') type('image/webp'),
+        url('/images/hero-bg.jpg') type('image/jpeg')
+      );
+    background-size: cover;
+    background-position: center right;
+    background-repeat: no-repeat;
+    overflow: hidden;
   }
 
+  /* Soft left-side darken to keep text contrast where copy sits. */
   .hero::before {
     content: '';
     position: absolute;
     inset: 0;
-    background:
-      radial-gradient(circle at 20% 30%, rgba(0, 102, 204, 0.25) 0%, transparent 45%),
-      radial-gradient(circle at 80% 70%, rgba(0, 102, 204, 0.18) 0%, transparent 45%);
+    background: linear-gradient(
+      90deg,
+      rgba(0, 10, 24, 0.7) 0%,
+      rgba(0, 10, 24, 0.45) 35%,
+      rgba(0, 10, 24, 0) 60%
+    );
+    pointer-events: none;
     z-index: 0;
   }
 
   .hero-content {
-    width: 100%;
-    max-width: 1200px;
-    background: rgba(0, 31, 63, 0.78);
-    backdrop-filter: blur(10px);
-    border-left: 5px solid var(--brand-blue);
-    padding: 56px 64px;
     position: relative;
     z-index: 1;
-    animation: fadeInUp 400ms ease both;
-    display: grid;
-    grid-template-columns: 1.5fr 1fr;
-    gap: 48px;
-    align-items: center;
-  }
-
-  .hero-text { min-width: 0; }
-
-  .hero-visual {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  .hero-visual img {
     width: 100%;
-    max-width: 380px;
-    height: auto;
-    display: block;
-    /* The bulb art is dark navy on transparent — invert it on the dark hero background */
-    filter: brightness(0) invert(1) opacity(0.92)
-      drop-shadow(0 0 28px rgba(0, 102, 204, 0.55));
+    max-width: 1200px;
+    margin: 0 auto;
+    animation: fadeInUp 500ms ease both;
   }
 
   @keyframes fadeInUp {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
   }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-content { animation: none; }
+  }
 
+  .hero-text { max-width: 580px; }
+
+  .hero-eyebrow {
+    font-size: 12px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--brand-blue);
+    margin: 0 0 24px 0;
+    font-weight: 700;
+  }
+
+  .hero h1 {
+    font-size: 68px;
+    font-weight: 800;
+    line-height: 1.04;
+    letter-spacing: -0.025em;
+    color: white;
+    margin: 0 0 24px 0;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+  .hero-mark {
+    display: inline-block;
+    height: 0.85em;
+    width: auto;
+    aspect-ratio: 244 / 359;
+    flex-shrink: 0;
+    transform: translateY(0.04em);
+    filter: brightness(0) invert(1) opacity(0.95)
+      drop-shadow(0 0 14px rgba(0, 102, 204, 0.55));
+  }
+
+  .hero .subtitle {
+    font-size: 19px;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.82);
+    line-height: 1.55;
+    margin: 0 0 36px 0;
+    max-width: 46ch;
+  }
+
+  /* Email signup */
+  .hero-signup-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 10px;
+    max-width: 520px;
+  }
+  .hero-signup-row input {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 8px;
+    padding: 14px 16px;
+    font-size: 15px;
+    font-family: inherit;
+    color: white;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+  }
+  .hero-signup-row input::placeholder { color: rgba(255, 255, 255, 0.45); }
+  .hero-signup-row input:focus {
+    outline: none;
+    border-color: var(--brand-blue);
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.3);
+  }
+  .hero-signup-row button {
+    background: var(--brand-blue);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 0 22px;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    cursor: pointer;
+    transition: background 0.15s ease, opacity 0.15s ease;
+    white-space: nowrap;
+  }
+  .hero-signup-row button:hover { background: #0077e6; }
+  .hero-signup-row button:disabled { opacity: 0.55; cursor: wait; }
+  .hero-signup-fineprint {
+    margin: 12px 0 0 0;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.45);
+  }
+  .hero-signup-status {
+    margin: 8px 0 0 0;
+    font-size: 13px;
+    min-height: 16px;
+    color: rgba(255, 255, 255, 0.7);
+  }
+  .hero-signup-status--ok { color: #74e0a8; }
+  .hero-signup-status--err { color: #ffb3b3; }
+
+  /* Bouncing scroll cue — centered at the bottom of the hero. */
   .hero-scroll-cue {
+    position: absolute;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
     display: inline-flex;
     align-items: center;
-    gap: 10px;
-    margin-top: 28px;
-    color: rgba(255, 255, 255, 0.55);
-    font-size: 12px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    font-weight: 600;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.6);
     text-decoration: none;
+    z-index: 2;
     transition: color 0.2s ease;
   }
-  .hero-scroll-cue:hover { color: rgba(255, 255, 255, 0.9); }
+  .hero-scroll-cue:hover { color: rgba(255, 255, 255, 0.95); }
   .hero-chevron {
     animation: heroBounce 2s ease-in-out infinite;
   }
@@ -162,120 +254,29 @@
     50% { transform: translateY(6px); }
   }
   @media (prefers-reduced-motion: reduce) {
-    .hero-content { animation: none; }
     .hero-chevron { animation: none; }
   }
 
-  .hero-eyebrow {
-    font-size: 14px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--brand-blue);
-    margin-bottom: 20px;
-    font-weight: 600;
+  @media (max-width: 960px) {
+    .hero h1 { font-size: 56px; gap: 14px; }
+    /* Pull the bulb further off-screen on narrower viewports so it doesn't crowd text. */
+    .hero { background-position: 130% center; }
   }
 
-  .hero h1 {
-    font-size: 72px;
-    font-weight: 700;
-    margin: 0 0 14px 0;
-    line-height: 1;
-    letter-spacing: -0.02em;
-  }
-
-  .hero h2 {
-    font-size: 32px;
-    font-weight: 500;
-    color: rgba(255, 255, 255, 0.92);
-    margin: 0 0 24px 0;
-  }
-
-  .hero .subtitle {
-    font-size: 20px;
-    font-weight: 300;
-    color: rgba(255, 255, 255, 0.78);
-    padding-left: 18px;
-    border-left: 3px solid var(--brand-blue);
-    margin-bottom: 28px;
-    line-height: 1.5;
-  }
-
-  /* Compact email signup inside the hero */
-  .hero-signup { margin-top: 4px; }
-  .hero-signup-label {
-    display: block;
-    font-size: 12px;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--brand-blue);
-    font-weight: 700;
-    margin-bottom: 10px;
-  }
-  .hero-signup-row {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    gap: 8px;
-    max-width: 480px;
-  }
-  .hero-signup-row input {
-    background: rgba(255, 255, 255, 0.95);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 6px;
-    padding: 12px 14px;
-    font-size: 15px;
-    font-family: inherit;
-    color: var(--dark-gray);
-    width: 100%;
-    box-sizing: border-box;
-  }
-  .hero-signup-row input::placeholder { color: var(--med-gray); }
-  .hero-signup-row input:focus {
-    outline: none;
-    border-color: var(--brand-blue);
-    box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.35);
-  }
-  .hero-signup-row button {
-    background: var(--brand-blue);
-    color: white;
-    border: none;
-    border-radius: 6px;
-    padding: 0 18px;
-    font-size: 14px;
-    font-weight: 700;
-    letter-spacing: 0.04em;
-    cursor: pointer;
-    transition: background 0.15s ease, opacity 0.15s ease;
-  }
-  .hero-signup-row button:hover { background: #0077e6; }
-  .hero-signup-row button:disabled { opacity: 0.55; cursor: wait; }
-  .hero-signup-status {
-    margin: 10px 0 0 0;
-    font-size: 13px;
-    min-height: 16px;
-    color: rgba(255, 255, 255, 0.7);
-  }
-  .hero-signup-status--ok { color: #74e0a8; }
-  .hero-signup-status--err { color: #ffb3b3; }
-
-  @media (max-width: 900px) {
-    .hero-content {
-      grid-template-columns: 1fr;
-      gap: 32px;
+  @media (max-width: 640px) {
+    .hero { padding: 100px 22px 64px; background-position: 75% bottom; background-size: 200% auto; }
+    .hero::before {
+      /* On mobile, more aggressive darken so text stays readable over the bulb area. */
+      background: linear-gradient(
+        180deg,
+        rgba(0, 10, 24, 0.75) 0%,
+        rgba(0, 10, 24, 0.55) 60%,
+        rgba(0, 10, 24, 0.85) 100%
+      );
     }
-    .hero-visual img { max-width: 220px; }
-  }
-
-  @media (max-width: 768px) {
-    .hero { padding: 80px 20px; min-height: 100vh; }
-    .hero-content { padding: 36px 28px; }
-    .hero h1 { font-size: 48px; }
-    .hero h2 { font-size: 24px; }
+    .hero h1 { font-size: 44px; gap: 12px; }
     .hero .subtitle { font-size: 17px; }
-    .hero-visual { order: -1; }
-    .hero-visual img { max-width: 160px; }
-    .hero-signup-row {
-      grid-template-columns: 1fr;
-    }
-    .hero-signup-row button { padding: 12px; }
+    .hero-signup-row { grid-template-columns: 1fr; }
+    .hero-signup-row button { padding: 13px; }
   }
 </style>

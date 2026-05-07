@@ -1,29 +1,6 @@
 ---
 import Section from '../components/Section.astro';
 
-const rtcf = [
-  {
-    letter: 'R',
-    word: 'Role',
-    body: 'Assign the AI a persona. "You are a senior copywriter." "You are a CFO advising a startup." This anchors the model in a perspective.',
-  },
-  {
-    letter: 'T',
-    word: 'Task',
-    body: 'State exactly what you want it to do. "Draft a one-page memo." "Summarize this in five bullets." Be specific.',
-  },
-  {
-    letter: 'C',
-    word: 'Context',
-    body: 'Fill in the relevant background. Who is the audience? What constraints exist? What have you already tried? More context = better output.',
-  },
-  {
-    letter: 'F',
-    word: 'Format',
-    body: 'Tell it the shape you want back. Bullet list? Markdown table? Email? 200 words or 2000? Examples beat abstract instructions.',
-  },
-];
-
 const workflow = [
   {
     step: '01',
@@ -54,15 +31,18 @@ const workflow = [
   </p>
 
   <h3>The RTCF Prompting Framework</h3>
-  <div class="rtcf-grid">
-    {rtcf.map((r) => (
-      <div class="rtcf-card">
-        <div class="rtcf-letter">{r.letter}</div>
-        <div class="rtcf-word">{r.word}</div>
-        <p>{r.body}</p>
-      </div>
-    ))}
-  </div>
+  <figure class="rtcf-figure">
+    <picture>
+      <source srcset="/images/rtcf-framework.webp" type="image/webp" />
+      <img
+        src="/images/rtcf-framework.jpg"
+        alt="The RTCF prompting framework: Role (assign a persona), Task (give the AI a task), Context (fill in relevant background information), Format (give a specific response structure)."
+        width="1800"
+        height="678"
+        loading="lazy"
+      />
+    </picture>
+  </figure>
 
   <h3>Before vs. After: A Simple Example</h3>
   <div class="two-col" style="grid-template-columns: 1fr 1fr;">
@@ -108,39 +88,13 @@ const workflow = [
 </Section>
 
 <style>
-  .rtcf-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 20px;
+  .rtcf-figure {
     margin: 30px 0;
   }
-  .rtcf-card {
-    padding: 28px;
-    background: white;
-    border: 1px solid rgba(0, 102, 204, 0.25);
-    border-left: 5px solid var(--brand-blue);
+  .rtcf-figure img {
+    width: 100%;
+    height: auto;
+    display: block;
     border-radius: 8px;
-    box-shadow: 0 4px 16px rgba(0, 31, 63, 0.05);
-  }
-  .rtcf-letter {
-    font-size: 56px;
-    font-weight: 800;
-    color: var(--brand-blue);
-    line-height: 1;
-    letter-spacing: -0.04em;
-  }
-  .rtcf-word {
-    font-size: 22px;
-    font-weight: 700;
-    color: var(--dark-gray);
-    margin: 4px 0 12px 0;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-  }
-  .rtcf-card p {
-    font-size: 15px;
-    line-height: 1.6;
-    color: var(--dark-gray);
-    margin: 0;
   }
 </style>
