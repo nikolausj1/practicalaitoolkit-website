@@ -1,21 +1,85 @@
 ---
-// Hero section: the talk title + subhead + scroll cue.
+// Hero section: the talk title + subhead + compact email capture + scroll cue.
 ---
 <div class="hero" id="hero">
   <div class="hero-content">
-    <p class="hero-eyebrow">Companion site for the Practical AI talk</p>
-    <h1>Practical AI</h1>
-    <h2>Use AI confidently. Today.</h2>
-    <div class="subtitle">
-      A plain-language guide to what AI is, when to use it, and how to get great results.
+    <div class="hero-text">
+      <p class="hero-eyebrow">Companion site for the Practical AI talk</p>
+      <h1>Practical AI</h1>
+      <h2>Use AI confidently. Today.</h2>
+      <div class="subtitle">
+        A plain-language guide to what AI is, when to use it, and how to get great results.
+      </div>
+
+      <form class="hero-signup" id="hero-signup" novalidate>
+        <label class="hero-signup-label" for="hero-email">Get a short note when something's worth knowing</label>
+        <div class="hero-signup-row">
+          <input
+            id="hero-email"
+            type="email"
+            name="email"
+            required
+            placeholder="you@example.com"
+            autocomplete="email"
+            inputmode="email"
+          />
+          <button type="submit" id="hero-signup-btn">Subscribe</button>
+        </div>
+        <p class="hero-signup-status" id="hero-signup-status" role="status" aria-live="polite"></p>
+      </form>
+
+      <a class="hero-scroll-cue" href="#what-is-ai" aria-label="Jump to first section">
+        <svg class="hero-chevron" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </a>
     </div>
-    <a class="hero-scroll-cue" href="#what-is-ai" aria-label="Jump to first section">
-      <svg class="hero-chevron" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <polyline points="6 9 12 15 18 9"></polyline>
-      </svg>
-    </a>
+
+    <div class="hero-visual" aria-hidden="true">
+      <img src="/images/practical-ai-bulb.png" alt="" width="380" height="380" loading="eager" />
+    </div>
   </div>
 </div>
+
+<script>
+  const form = document.getElementById('hero-signup') as HTMLFormElement | null;
+  const input = document.getElementById('hero-email') as HTMLInputElement | null;
+  const button = document.getElementById('hero-signup-btn') as HTMLButtonElement | null;
+  const status = document.getElementById('hero-signup-status');
+
+  if (form && input && button && status) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = input.value.trim();
+      if (!email) return;
+      button.disabled = true;
+      status.textContent = '';
+      status.className = 'hero-signup-status';
+      try {
+        const res = await fetch('/api/subscribe', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ email }),
+        });
+        if (!res.ok) {
+          const data = await res.json().catch(() => ({}));
+          throw new Error(data?.error || 'request_failed');
+        }
+        status.textContent = "You're in. Thanks.";
+        status.classList.add('hero-signup-status--ok');
+        form.reset();
+      } catch (err) {
+        status.textContent =
+          err instanceof Error && err.message === 'invalid_email'
+            ? "That email doesn't look right."
+            : "Something glitched. Try again in a moment.";
+        status.classList.add('hero-signup-status--err');
+      } finally {
+        button.disabled = false;
+      }
+    });
+  }
+</script>
 
 <style>
   .hero {
@@ -41,7 +105,6 @@
   .hero-content {
     width: 100%;
     max-width: 1200px;
-    text-align: left;
     background: rgba(0, 31, 63, 0.78);
     backdrop-filter: blur(10px);
     border-left: 5px solid var(--brand-blue);
@@ -49,6 +112,27 @@
     position: relative;
     z-index: 1;
     animation: fadeInUp 400ms ease both;
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 48px;
+    align-items: center;
+  }
+
+  .hero-text { min-width: 0; }
+
+  .hero-visual {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .hero-visual img {
+    width: 100%;
+    max-width: 380px;
+    height: auto;
+    display: block;
+    /* The bulb art is dark navy on transparent — invert it on the dark hero background */
+    filter: brightness(0) invert(1) opacity(0.92)
+      drop-shadow(0 0 28px rgba(0, 102, 204, 0.55));
   }
 
   @keyframes fadeInUp {
@@ -60,7 +144,7 @@
     display: inline-flex;
     align-items: center;
     gap: 10px;
-    margin-top: 32px;
+    margin-top: 28px;
     color: rgba(255, 255, 255, 0.55);
     font-size: 12px;
     letter-spacing: 0.18em;
@@ -112,8 +196,73 @@
     color: rgba(255, 255, 255, 0.78);
     padding-left: 18px;
     border-left: 3px solid var(--brand-blue);
-    margin-bottom: 0;
+    margin-bottom: 28px;
     line-height: 1.5;
+  }
+
+  /* Compact email signup inside the hero */
+  .hero-signup { margin-top: 4px; }
+  .hero-signup-label {
+    display: block;
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--brand-blue);
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+  .hero-signup-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 8px;
+    max-width: 480px;
+  }
+  .hero-signup-row input {
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    padding: 12px 14px;
+    font-size: 15px;
+    font-family: inherit;
+    color: var(--dark-gray);
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .hero-signup-row input::placeholder { color: var(--med-gray); }
+  .hero-signup-row input:focus {
+    outline: none;
+    border-color: var(--brand-blue);
+    box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.35);
+  }
+  .hero-signup-row button {
+    background: var(--brand-blue);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 0 18px;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    transition: background 0.15s ease, opacity 0.15s ease;
+  }
+  .hero-signup-row button:hover { background: #0077e6; }
+  .hero-signup-row button:disabled { opacity: 0.55; cursor: wait; }
+  .hero-signup-status {
+    margin: 10px 0 0 0;
+    font-size: 13px;
+    min-height: 16px;
+    color: rgba(255, 255, 255, 0.7);
+  }
+  .hero-signup-status--ok { color: #74e0a8; }
+  .hero-signup-status--err { color: #ffb3b3; }
+
+  @media (max-width: 900px) {
+    .hero-content {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+    .hero-visual img { max-width: 220px; }
   }
 
   @media (max-width: 768px) {
@@ -122,5 +271,11 @@
     .hero h1 { font-size: 48px; }
     .hero h2 { font-size: 24px; }
     .hero .subtitle { font-size: 17px; }
+    .hero-visual { order: -1; }
+    .hero-visual img { max-width: 160px; }
+    .hero-signup-row {
+      grid-template-columns: 1fr;
+    }
+    .hero-signup-row button { padding: 12px; }
   }
 </style>

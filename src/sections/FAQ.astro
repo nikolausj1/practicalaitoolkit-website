@@ -1,0 +1,108 @@
+---
+import Section from '../components/Section.astro';
+
+const faqs = [
+  {
+    q: 'Is it safe to use AI with confidential or proprietary information?',
+    a: "Check your company's AI policy first — most have one now. As a default: don't paste customer data, financial details, contracts, or anything you wouldn't email outside the company into a free consumer chatbot. Enterprise plans (ChatGPT Team/Enterprise, Claude for Work, Microsoft Copilot for M365, Gemini for Workspace) keep your data private and out of training. If your employer offers one of those, use it.",
+  },
+  {
+    q: "There are so many tools — which one should we pick?",
+    a: "For 90% of work tasks, the major chat tools are interchangeable. ChatGPT, Claude, Gemini, and Copilot are all good. Pick the one your employer already pays for, or whichever feels most natural to talk to. The bigger lever isn't tool choice — it's how skillfully you use the one you have.",
+  },
+  {
+    q: "How do I handle hallucinations? Doesn't the AI make stuff up?",
+    a: "Yes, sometimes confidently. The fix is twofold: (1) turn on Web Search when facts matter — the model cites sources you can click through. (2) Treat AI output the way you'd treat a draft from a brilliant junior — verify anything that has consequences if it's wrong. Names, dates, statistics, and citations are the most common offenders.",
+  },
+  {
+    q: 'Is the free version good enough, or should we pay?',
+    a: 'Free tiers are surprisingly capable for everyday use. You hit limits when you (a) need higher usage volume, (b) want the latest/strongest models, (c) need bigger context windows for long documents, or (d) need privacy controls for work data. For an individual evaluating: start free for two weeks. If you find yourself hitting walls, $20/month for the paid tier is almost always worth it.',
+  },
+  {
+    q: 'Will my conversations be used to train the AI?',
+    a: "Depends on the tool and the tier. Consumer free/personal accounts often default to using your chats for training (you can usually turn it off in settings). Business and enterprise tiers (ChatGPT Team/Enterprise, Claude for Work, Copilot for M365) don't train on your data by default. If privacy matters, check the data settings on whichever tool you're using and disable training opt-in.",
+  },
+  {
+    q: "I'm not technical — can I actually use these tools well?",
+    a: "Yes. Being good at AI is mostly about being good at communicating what you want — which is a writing and thinking skill, not a coding skill. The people who get the most out of AI tend to be the people who would have been great at delegating to a smart assistant. If you can write a clear email, you can prompt well.",
+  },
+  {
+    q: "How do I get my team started without it being chaos?",
+    a: "Start with one approved tool, one clear policy on what data is OK to use it for, and a small set of high-leverage use cases (drafting, summarizing, brainstorming). Let early adopters share what's working in a shared channel. Don't try to mandate it top-down or ban it bottom-up — both fail. If you want help structuring this, that's a lot of what I do — see the section above.",
+  },
+];
+---
+<Section id="faq" title="FAQ" band="dark">
+  <p>
+    The questions I hear most after every talk — especially from teams trying to figure out how to use this
+    stuff at work without breaking anything.
+  </p>
+
+  <div class="faq-list">
+    {faqs.map((f, idx) => (
+      <details class="faq-item" open={idx === 0}>
+        <summary>
+          <span class="faq-q">{f.q}</span>
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </summary>
+        <div class="faq-a">
+          <p>{f.a}</p>
+        </div>
+      </details>
+    ))}
+  </div>
+</Section>
+
+<style>
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    margin: 30px 0 0 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+  }
+  .faq-item {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  }
+  .faq-item summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 22px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    color: white;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 1.4;
+    transition: color 0.15s ease;
+  }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item summary:hover { color: rgba(255, 255, 255, 0.8); }
+  .faq-q { flex: 1; }
+  .faq-icon {
+    font-size: 24px;
+    font-weight: 300;
+    color: var(--brand-blue);
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+    line-height: 1;
+  }
+  .faq-item[open] .faq-icon {
+    transform: rotate(45deg);
+  }
+  .faq-a {
+    padding: 0 0 24px 0;
+  }
+  .faq-a p {
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 16px;
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  @media (max-width: 720px) {
+    .faq-item summary { font-size: 16px; padding: 18px 0; gap: 16px; }
+    .faq-a p { font-size: 15px; }
+  }
+</style>
