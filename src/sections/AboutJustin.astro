@@ -2,10 +2,10 @@
 import Section from '../components/Section.astro';
 
 const previousWork = [
-  { name: 'Amazon', slug: 'amazon' },
-  { name: 'NASA', slug: 'nasa' },
-  { name: 'Microsoft', slug: 'microsoft' },
-  { name: 'Target', slug: 'target' },
+  { name: 'Amazon', file: 'amazon.png' },
+  { name: 'NASA', file: 'nasa.png' },
+  { name: 'Microsoft', file: 'microsoft.png' },
+  { name: 'Target', file: 'target.png' },
 ];
 ---
 <Section id="about" title="About Justin" band="light">
@@ -45,13 +45,10 @@ const previousWork = [
     {previousWork.map((co) => (
       <li>
         <img
-          src={`https://api.iconify.design/simple-icons/${co.slug}.svg?color=%239ca3af`}
+          src={`/images/logos/${co.file}`}
           alt={co.name}
-          width="36"
-          height="36"
           loading="lazy"
         />
-        <span class="sr-only">{co.name}</span>
       </li>
     ))}
   </ul>
@@ -124,21 +121,15 @@ const previousWork = [
   .prev-work img {
     height: 36px;
     width: auto;
-    max-width: 140px;
-    opacity: 0.75;
-    transition: opacity 0.2s ease;
+    max-width: 160px;
+    object-fit: contain;
+    filter: grayscale(100%);
+    opacity: 0.7;
+    transition: opacity 0.2s ease, filter 0.2s ease;
   }
-  .prev-work img:hover { opacity: 1; }
-  .sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
+  .prev-work img:hover {
+    opacity: 1;
+    filter: grayscale(0%);
   }
 
   @media (max-width: 720px) {
