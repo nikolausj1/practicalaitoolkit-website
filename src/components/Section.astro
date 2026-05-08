@@ -15,6 +15,7 @@ const digit = number ? number.replace(/^0+/, '') || '0' : null;
     <span class="section-number-bleed" aria-hidden="true">{digit}</span>
   )}
   <div class="section-card">
+    {number && <p class="section-number-eyebrow">{number}</p>}
     <h2 class="section-title">{title}</h2>
     <slot />
   </div>
@@ -70,12 +71,24 @@ const digit = number ? number.replace(/^0+/, '') || '0' : null;
     padding-top: clamp(48px, 7vw, 140px);
   }
 
+  /* Small uppercase eyebrow — only shown on mobile in place of the bleed digit. */
+  .section-number-eyebrow {
+    display: none;
+    color: var(--brand-blue);
+    font-size: 14px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin: 0 0 8px 0;
+  }
+
   @media (max-width: 768px) {
-    .section-number-bleed {
-      left: -0.26em;
-    }
+    .section-number-bleed { display: none; }
+    .section-number-eyebrow { display: block; }
+    /* Bleed digit is gone on mobile, so the card no longer needs the deck-style
+       extra clearance above the title. */
     .section-number-bleed + .section-card {
-      padding-top: clamp(40px, 9vw, 96px);
+      padding-top: 0;
     }
   }
 </style>
