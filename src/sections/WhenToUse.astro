@@ -19,24 +19,6 @@ const personalExamples = [
   'Sorting through a decision out loud',
 ];
 
-const strengths = [
-  'Brainstorming ideas',
-  'Drafting written content',
-  'Summarizing long documents',
-  'Reformatting and rewriting',
-  'Explaining difficult concepts',
-  'Translating between languages',
-  'Generating starter code',
-];
-
-const weaknesses = [
-  'Up-to-the-minute facts (without web search)',
-  'Math and precise calculations (without tools)',
-  'Anything where being wrong has real consequences',
-  'Tasks needing genuine human judgement or empathy',
-  'Knowing your private context unless you provide it',
-];
-
 const dontUse = [
   {
     title: 'When you need to learn and synthesize',
@@ -107,22 +89,6 @@ const dontUse = [
   <ul class="arrow-list cols-2">
     {personalExamples.map((x) => <li>{x}</li>)}
   </ul>
-
-  <h3>Strengths vs. Weaknesses</h3>
-  <div class="card-grid">
-    <div class="card">
-      <h4>AI is great at</h4>
-      <ul class="arrow-list" style="margin: 12px 0;">
-        {strengths.map((s) => <li>{s}</li>)}
-      </ul>
-    </div>
-    <div class="card">
-      <h4>AI struggles with</h4>
-      <ul class="arrow-list" style="margin: 12px 0;">
-        {weaknesses.map((w) => <li>{w}</li>)}
-      </ul>
-    </div>
-  </div>
 
   <h3>When Not to Use AI</h3>
   <p>
