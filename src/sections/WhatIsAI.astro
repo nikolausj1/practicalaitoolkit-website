@@ -283,10 +283,34 @@ const features = [
   </div>
 
   <h3>How These Models Learn</h3>
+  <figure class="slide-figure">
+    <picture>
+      <source srcset="/images/how-models-learn.webp" type="image/webp" />
+      <img
+        src="/images/how-models-learn.jpg"
+        alt="How AI models are made — three phases: Model Training (trained on books, articles, websites; learns grammar, facts, reasoning, style); Fine Tuning & Alignment (taught to have helpful conversations, trained on good responses); Response Generation (extensively tested and refined; humans rate responses for quality and safety)."
+        width="1800"
+        height="784"
+        loading="lazy"
+      />
+    </picture>
+  </figure>
   <p>
-    Modern AI models are trained on billions of examples — books, articles, websites, and conversations. They
-    learn patterns: grammar, facts, reasoning, code structure, what good writing sounds like. Once trained, they
-    don't look anything up. They predict, token by token, what should come next given everything they've seen.
+    Building a model like ChatGPT looks roughly like this. Companies gather billions of documents — books,
+    every Wikipedia article, websites, research papers — and feed them through thousands of powerful computers
+    for months. A single training run for a frontier model costs north of $100 million. The computer isn't
+    memorizing facts though; it's learning <em>patterns</em> — how human language works, and the shape of
+    human thought.
+  </p>
+  <p>
+    Once the base model exists, humans teach it to have helpful conversations using examples of good responses,
+    then stress-test it for safety so it won't, say, walk someone through something illegal.
+  </p>
+  <p>
+    After release, when you send it a request, the model generates the response one word at a time. For each
+    word it asks itself: <em>"Based on the patterns I learned and the conversation we're having, what word
+    comes next?"</em> Think of it as super-powered autocomplete — choosing the next-most-likely word, then
+    the next, until the answer feels complete.
   </p>
 
   <h3>The AI Tool Landscape</h3>
