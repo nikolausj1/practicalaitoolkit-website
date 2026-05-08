@@ -14,13 +14,38 @@ const links = [
 <header class="site-header" data-pos="top">
   <div class="site-header-inner">
     <a href="#hero" class="brand" aria-label="Practical AI Toolkit — top">
+      <img src="/images/practical-ai-bulb.png" alt="" class="brand-mark" />
       <span class="brand-text">Practical AI Toolkit</span>
     </a>
+
     <nav class="primary-nav" aria-label="Primary">
       {links.map((l) => <a href={l.href}>{l.label}</a>)}
     </nav>
+
     <a href="#hero-email" class="cta-subscribe">Subscribe</a>
+
+    <button
+      type="button"
+      class="mobile-toggle"
+      id="mobile-toggle"
+      aria-expanded="false"
+      aria-controls="mobile-nav"
+      aria-label="Open menu"
+    >
+      <span class="mobile-toggle-bar"></span>
+      <span class="mobile-toggle-bar"></span>
+      <span class="mobile-toggle-bar"></span>
+    </button>
   </div>
+
+  <nav class="mobile-nav" id="mobile-nav" aria-label="Sections">
+    <ul>
+      {links.map((l) => (
+        <li><a href={l.href}>{l.label}</a></li>
+      ))}
+      <li><a href="#hero-email" class="mobile-nav-cta">Subscribe</a></li>
+    </ul>
+  </nav>
 </header>
 
 <script>
@@ -81,15 +106,50 @@ const links = [
       sectionEls.forEach((el) => observer.observe(el));
     }
 
-    // The Subscribe button scrolls to the hero email form and focuses it.
-    const subscribeBtn = header.querySelector<HTMLAnchorElement>('.cta-subscribe');
-    subscribeBtn?.addEventListener('click', (e) => {
-      const input = document.getElementById('hero-email') as HTMLInputElement | null;
-      if (input) {
-        // Allow the default anchor jump to fire, then focus.
-        window.setTimeout(() => input.focus({ preventScroll: false }), 350);
-      }
+    // Subscribe (desktop) — focus the hero email after the anchor jump.
+    const subscribeBtns = header.querySelectorAll<HTMLAnchorElement>('a[href="#hero-email"]');
+    subscribeBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const input = document.getElementById('hero-email') as HTMLInputElement | null;
+        if (input) {
+          window.setTimeout(() => input.focus({ preventScroll: false }), 350);
+        }
+      });
     });
+
+    // Mobile menu toggle
+    const toggle = document.getElementById('mobile-toggle') as HTMLButtonElement | null;
+    const mobileNav = document.getElementById('mobile-nav');
+    const closeMenu = () => {
+      toggle?.setAttribute('aria-expanded', 'false');
+      toggle?.setAttribute('aria-label', 'Open menu');
+      header.classList.remove('mobile-open');
+      document.body.style.overflow = '';
+    };
+    const openMenu = () => {
+      toggle?.setAttribute('aria-expanded', 'true');
+      toggle?.setAttribute('aria-label', 'Close menu');
+      header.classList.add('mobile-open');
+      document.body.style.overflow = 'hidden';
+    };
+    toggle?.addEventListener('click', () => {
+      const isOpen = header.classList.contains('mobile-open');
+      isOpen ? closeMenu() : openMenu();
+    });
+
+    // Close on link tap inside the mobile menu
+    mobileNav?.querySelectorAll<HTMLAnchorElement>('a').forEach((a) => {
+      a.addEventListener('click', () => closeMenu());
+    });
+
+    // Close on escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && header.classList.contains('mobile-open')) closeMenu();
+    });
+
+    // Auto-close if viewport widens past mobile breakpoint
+    const mq = window.matchMedia('(min-width: 641px)');
+    mq.addEventListener('change', (e) => { if (e.matches) closeMenu(); });
   }
 </script>
 
@@ -106,8 +166,9 @@ const links = [
     border-bottom: 1px solid rgba(255, 255, 255, 0.06);
     transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
   }
-  .site-header[data-pos='scrolled'] {
-    background: rgba(0, 20, 40, 0.85);
+  .site-header[data-pos='scrolled'],
+  .site-header.mobile-open {
+    background: rgba(0, 20, 40, 0.92);
     border-bottom-color: rgba(255, 255, 255, 0.1);
     box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25);
   }
@@ -137,6 +198,7 @@ const links = [
     width: auto;
     aspect-ratio: 244 / 359;
     filter: brightness(0) invert(1) opacity(0.95);
+    display: none; /* desktop hides the mark — text alone */
   }
   .brand-text { white-space: nowrap; }
 
@@ -151,7 +213,6 @@ const links = [
     -ms-overflow-style: none;
   }
   .primary-nav::-webkit-scrollbar { display: none; }
-
   .primary-nav a {
     color: rgba(255, 255, 255, 0.72);
     text-decoration: none;
@@ -182,16 +243,101 @@ const links = [
   }
   .cta-subscribe:hover { background: #0077e6; transform: translateY(-1px); }
 
+  /* Hamburger button — hidden on desktop */
+  .mobile-toggle {
+    display: none;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 8px;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    cursor: pointer;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    flex-shrink: 0;
+  }
+  .mobile-toggle:hover { background: rgba(255, 255, 255, 0.14); }
+  .mobile-toggle-bar {
+    width: 18px;
+    height: 2px;
+    background: white;
+    border-radius: 2px;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+  /* Animate hamburger → X when open */
+  .site-header.mobile-open .mobile-toggle-bar:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+  .site-header.mobile-open .mobile-toggle-bar:nth-child(2) { opacity: 0; }
+  .site-header.mobile-open .mobile-toggle-bar:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  /* Mobile dropdown panel — hidden on desktop, slides down on mobile when open */
+  .mobile-nav {
+    display: none;
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.3s ease;
+  }
+  .mobile-nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 8px 18px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .mobile-nav a {
+    display: block;
+    color: rgba(255, 255, 255, 0.85);
+    text-decoration: none;
+    padding: 14px 6px;
+    font-size: 16px;
+    font-weight: 500;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+  .mobile-nav a:hover,
+  .mobile-nav a:focus { color: white; }
+  .mobile-nav .mobile-nav-cta {
+    margin-top: 14px;
+    background: var(--brand-blue);
+    color: white;
+    text-align: center;
+    padding: 14px 18px;
+    border-radius: 999px;
+    font-weight: 700;
+    border: none;
+  }
+  .mobile-nav .mobile-nav-cta:hover { background: #0077e6; }
+
   @media (max-width: 900px) {
     .site-header-inner { padding: 10px 18px; gap: 14px; }
     .primary-nav { gap: 14px; }
     .primary-nav a { font-size: 12px; }
-    .brand-text { display: none; }
+    .brand-mark { display: block; }
     .cta-subscribe { padding: 7px 14px; font-size: 13px; }
   }
 
   @media (max-width: 640px) {
     .primary-nav { display: none; }
-    .site-header-inner { justify-content: space-between; }
+    .site-header-inner { gap: 10px; padding: 10px 14px; }
+    /* Brand keeps the bulb + text; text is the natural flex grower so the row stays balanced. */
+    .brand { flex: 1; min-width: 0; }
+    .brand-text { font-size: 15px; overflow: hidden; text-overflow: ellipsis; }
+    .cta-subscribe { padding: 7px 14px; font-size: 12px; }
+    .mobile-toggle { display: inline-flex; }
+    .mobile-nav { display: block; }
+    .site-header.mobile-open .mobile-nav { max-height: calc(100vh - 64px); }
+  }
+
+  @media (max-width: 380px) {
+    /* Very small phones: shrink the wordmark so everything fits on one line. */
+    .brand-text { font-size: 14px; }
+    .cta-subscribe { padding: 6px 12px; font-size: 11px; }
+    .mobile-toggle { width: 36px; height: 36px; }
   }
 </style>
