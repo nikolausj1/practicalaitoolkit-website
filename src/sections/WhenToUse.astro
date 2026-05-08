@@ -1,24 +1,6 @@
 ---
 import Section from '../components/Section.astro';
 
-const workExamples = [
-  'Drafting emails, reports, and proposals',
-  'Summarizing long documents and meeting notes',
-  'Brainstorming names, taglines, and concepts',
-  'Translating text between languages',
-  'Cleaning up data or generating boilerplate code',
-  'Preparing for interviews, presentations, and tough conversations',
-];
-
-const personalExamples = [
-  'Planning trips and creating itineraries',
-  'Cooking — recipes, substitutions, meal plans',
-  'Explaining anything in plain language',
-  'Helping with homework or learning a new topic',
-  'Writing thoughtful messages — birthday notes, condolences, apologies',
-  'Sorting through a decision out loud',
-];
-
 const dontUse = [
   {
     title: 'When you need to learn and synthesize',
@@ -79,16 +61,6 @@ const dontUse = [
   <p style="margin-top: 16px; font-style: italic; opacity: 0.85;">
     You're not searching. You're instructing.
   </p>
-
-  <h3>Real Work Examples</h3>
-  <ul class="arrow-list cols-2">
-    {workExamples.map((x) => <li>{x}</li>)}
-  </ul>
-
-  <h3>Personal Examples</h3>
-  <ul class="arrow-list cols-2">
-    {personalExamples.map((x) => <li>{x}</li>)}
-  </ul>
 
   <h3>When Not to Use AI</h3>
   <p>
