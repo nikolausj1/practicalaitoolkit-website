@@ -1,17 +1,6 @@
 ---
 import Section from '../components/Section.astro';
 
-const aiTypes = [
-  {
-    title: 'Predictive AI',
-    body: 'Predicts outcomes from patterns in data. Powers fraud detection, recommendation engines, demand forecasting, medical diagnostics. It tells you what is likely to happen.',
-  },
-  {
-    title: 'Generative AI',
-    body: 'Creates new content — text, images, code, audio, video. Powers ChatGPT, Claude, Midjourney, and the tools this site is mostly about. It produces something that did not exist a moment ago.',
-  },
-];
-
 const modes = [
   {
     title: 'Fast Mode',
@@ -271,16 +260,6 @@ const features = [
     AI is a technology that learns patterns from massive amounts of data and uses those patterns to do new things —
     answer questions, generate writing, summarize documents, write code, create images, and a lot more.
   </p>
-
-  <h3>Two Main Types of AI</h3>
-  <div class="card-grid">
-    {aiTypes.map((t) => (
-      <div class="card">
-        <h4>{t.title}</h4>
-        <p>{t.body}</p>
-      </div>
-    ))}
-  </div>
 
   <h3>How These Models Learn</h3>
   <figure class="slide-figure">
