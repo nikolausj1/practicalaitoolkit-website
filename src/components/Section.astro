@@ -30,14 +30,14 @@ const digit = number ? number.replace(/^0+/, '') || '0' : null;
     position: absolute;
     top: 0;
     /* Bleed off the left edge of the viewport.
-       Negative offset shoves the digit out so its left ~25% is clipped. */
-    left: -0.18em;
+       Negative offset shoves the digit out so ~25-30% is clipped. */
+    left: -0.22em;
     z-index: 0;
     pointer-events: none;
     user-select: none;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-weight: 800;
-    font-size: 360px;
+    font-size: clamp(280px, 26vw, 880px);
     line-height: 1;
     letter-spacing: -0.05em;
   }
@@ -63,26 +63,19 @@ const digit = number ? number.replace(/^0+/, '') || '0' : null;
   }
 
   /* Push the section title down so its baseline sits roughly inline with the
-     middle of the giant digit (same vibe as the deck). */
+     middle of the giant digit. With the larger digit the card now sits in the
+     digit's lower half — when they overlap, the card's white background covers
+     the digit (z-index above) so the digit reads as a watermark behind. */
   .section-number-bleed + .section-card {
-    padding-top: clamp(40px, 6vw, 110px);
-  }
-
-  @media (max-width: 1100px) {
-    .section-number-bleed { font-size: 260px; }
+    padding-top: clamp(48px, 7vw, 140px);
   }
 
   @media (max-width: 768px) {
     .section-number-bleed {
-      font-size: 200px;
-      left: -0.22em;
+      left: -0.26em;
     }
     .section-number-bleed + .section-card {
-      padding-top: clamp(32px, 8vw, 72px);
+      padding-top: clamp(40px, 9vw, 96px);
     }
-  }
-
-  @media (max-width: 480px) {
-    .section-number-bleed { font-size: 160px; }
   }
 </style>
