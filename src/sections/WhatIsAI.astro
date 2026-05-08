@@ -12,24 +12,6 @@ const aiTypes = [
   },
 ];
 
-const generalTools = [
-  { name: 'ChatGPT', vendor: 'OpenAI', slug: null },
-  { name: 'Claude', vendor: 'Anthropic', slug: 'anthropic' },
-  { name: 'Gemini', vendor: 'Google', slug: 'googlegemini' },
-  { name: 'Copilot', vendor: 'Microsoft', slug: 'githubcopilot' },
-  { name: 'Grok', vendor: 'xAI', slug: 'x' },
-  { name: 'Perplexity', vendor: 'Perplexity AI', slug: 'perplexity' },
-];
-
-const specializedTools = [
-  { name: 'Midjourney', purpose: 'Image generation', slug: null },
-  { name: 'Flux', purpose: 'Image generation', slug: 'flux' },
-  { name: 'Fireflies', purpose: 'Meeting notes', slug: null },
-  { name: 'Gamma', purpose: 'Slide decks', slug: null },
-  { name: 'Grammarly', purpose: 'Writing assistance', slug: 'grammarly' },
-  { name: 'Jasper', purpose: 'Marketing copy', slug: null },
-];
-
 const modes = [
   {
     title: 'Fast Mode',
@@ -308,38 +290,18 @@ const features = [
   </p>
 
   <h3>The AI Tool Landscape</h3>
-  <div class="two-col" style="grid-template-columns: 1fr 1fr;">
-    <div>
-      <h4 style="color: var(--brand-blue); margin: 0 0 14px 0;">General-Purpose Tools</h4>
-      <ul class="tool-list">
-        {generalTools.map((t) => (
-          <li>
-            {t.slug ? (
-              <img src={`https://cdn.simpleicons.org/${t.slug}/0066cc`} alt="" class="tool-logo" width="22" height="22" loading="eager" />
-            ) : (
-              <span class="tool-logo tool-logo--fallback" aria-hidden="true">{t.name[0]}</span>
-            )}
-            <span><strong>{t.name}</strong> — {t.vendor}</span>
-          </li>
-        ))}
-      </ul>
-    </div>
-    <div>
-      <h4 style="color: var(--brand-blue); margin: 0 0 14px 0;">Specialized Tools</h4>
-      <ul class="tool-list">
-        {specializedTools.map((t) => (
-          <li>
-            {t.slug ? (
-              <img src={`https://cdn.simpleicons.org/${t.slug}/0066cc`} alt="" class="tool-logo" width="22" height="22" loading="eager" />
-            ) : (
-              <span class="tool-logo tool-logo--fallback" aria-hidden="true">{t.name[0]}</span>
-            )}
-            <span><strong>{t.name}</strong> — {t.purpose}</span>
-          </li>
-        ))}
-      </ul>
-    </div>
-  </div>
+  <figure class="slide-figure">
+    <picture>
+      <source srcset="/images/tools.webp" type="image/webp" />
+      <img
+        src="/images/tools.jpg"
+        alt="The AI tool landscape — General Tools (ChatGPT, Gemini, Claude, Grok, Meta AI, Mistral AI) and Specialized Tools (Perplexity, Grammarly, Gamma, Midjourney, Fireflies, Jasper, ElevenLabs, Copilot)."
+        width="1800"
+        height="688"
+        loading="lazy"
+      />
+    </picture>
+  </figure>
 
   <h3>Different Modes</h3>
   <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
@@ -353,13 +315,16 @@ const features = [
 
   <h3>Tools &amp; Features</h3>
   <figure class="slide-figure">
-    <img
-      src="/images/tools-and-features.png"
-      alt="Tools and Features overview slide from the Practical AI talk."
-      loading="lazy"
-      width="1600"
-      height="900"
-    />
+    <picture>
+      <source srcset="/images/features.webp" type="image/webp" />
+      <img
+        src="/images/features.jpg"
+        alt="AI tools and features overview — floating labels for Agent Mode, Deep Research, Memory, Video Mode, Thinking Mode, Voice Mode, Connectors & MCP, Personalization, Skills, Computer Use, Web Search, Coding, Document Analysis, Image Generation, Image Analysis, and Projects."
+        loading="lazy"
+        width="1800"
+        height="874"
+      />
+    </picture>
   </figure>
   <p style="margin-top: 30px;">Today's AI assistants are no longer just text-in / text-out. These are the features that matter most — what each one is, when to reach for it, and where to find it.</p>
 
