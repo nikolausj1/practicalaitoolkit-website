@@ -266,7 +266,7 @@ ul.arrow-list li::before {
 
 /* Slide image figure (used to embed deck slides as page visuals) */
 .slide-figure {
-  margin: 30px 0 0 0;
+  margin: 30px 0 36px 0;
   padding: 0;
   background: white;
   border-radius: 10px;
@@ -278,6 +278,14 @@ ul.arrow-list li::before {
   display: block;
   width: 100%;
   height: auto;
+}
+.slide-figure figcaption {
+  padding: 12px 18px 14px;
+  font-size: 13px;
+  color: var(--med-gray);
+  text-align: center;
+  border-top: 1px solid rgba(0, 102, 204, 0.1);
+  background: rgba(0, 102, 204, 0.03);
 }
 
 /* Sticky section-jump nav */
