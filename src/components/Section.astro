@@ -6,22 +6,87 @@ interface Props {
   band: 'light' | 'dark';
 }
 const { id, title, number, band } = Astro.props;
+
+// Display the digit alone (strip leading zeros) — e.g. "01" → "1", "07" → "7".
+const digit = number ? number.replace(/^0+/, '') || '0' : null;
 ---
 <section id={id} class={`scroll-section band-${band}`}>
+  {digit && (
+    <span class="section-number-bleed" aria-hidden="true">{digit}</span>
+  )}
   <div class="section-card">
-    {number && <p class="section-number">{number}</p>}
+    {number && <p class="section-number-eyebrow">{number}</p>}
     <h2 class="section-title">{title}</h2>
     <slot />
   </div>
 </section>
 
 <style>
-  .section-number {
+  .scroll-section {
+    position: relative;
+    overflow: hidden; /* clip the part of the digit that bleeds beyond the section */
+  }
+
+  .section-number-bleed {
+    position: absolute;
+    top: 0;
+    /* Bleed off the left edge of the viewport.
+       Negative offset shoves the digit out so ~25-30% is clipped. */
+    left: -0.22em;
+    z-index: 0;
+    pointer-events: none;
+    user-select: none;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 800;
+    font-size: clamp(280px, 38vw, 800px);
+    line-height: 1;
+    letter-spacing: -0.05em;
+  }
+
+  /* On light bands the digit reads as a watermark — brand-blue tint, kept faint
+     so body text passing over it stays clearly readable. */
+  .scroll-section.band-light .section-number-bleed {
+    color: var(--brand-blue);
+    opacity: 0.2;
+  }
+
+  /* On dark bands (navy gradient), use a tinted blue at low opacity so the
+     digit reads as a watermark without competing with the content. */
+  .scroll-section.band-dark .section-number-bleed {
+    color: rgba(0, 153, 255, 0.16);
+  }
+
+  /* Card sits above the digit so its right portion gets hidden by the card on
+     narrower viewports — preserves the "bleed in from the left" feel without
+     requiring extra horizontal space. */
+  .section-card {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Title cap-aligns with the digit's top instead of sitting at its midline. */
+  .section-number-bleed + .section-card {
+    padding-top: 0;
+  }
+
+  /* Small uppercase eyebrow — only shown on mobile in place of the bleed digit. */
+  .section-number-eyebrow {
+    display: none;
     color: var(--brand-blue);
     font-size: 14px;
     letter-spacing: 0.2em;
     text-transform: uppercase;
     font-weight: 600;
     margin: 0 0 8px 0;
+  }
+
+  @media (max-width: 768px) {
+    .section-number-bleed { display: none; }
+    .section-number-eyebrow { display: block; }
+    /* Bleed digit is gone on mobile, so the card no longer needs the deck-style
+       extra clearance above the title. */
+    .section-number-bleed + .section-card {
+      padding-top: 0;
+    }
   }
 </style>
