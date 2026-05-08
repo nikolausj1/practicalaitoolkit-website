@@ -6,22 +6,83 @@ interface Props {
   band: 'light' | 'dark';
 }
 const { id, title, number, band } = Astro.props;
+
+// Display the digit alone (strip leading zeros) — e.g. "01" → "1", "07" → "7".
+const digit = number ? number.replace(/^0+/, '') || '0' : null;
 ---
 <section id={id} class={`scroll-section band-${band}`}>
+  {digit && (
+    <span class="section-number-bleed" aria-hidden="true">{digit}</span>
+  )}
   <div class="section-card">
-    {number && <p class="section-number">{number}</p>}
     <h2 class="section-title">{title}</h2>
     <slot />
   </div>
 </section>
 
 <style>
-  .section-number {
-    color: var(--brand-blue);
-    font-size: 14px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    font-weight: 600;
-    margin: 0 0 8px 0;
+  .scroll-section {
+    position: relative;
+    overflow: hidden; /* clip the part of the digit that bleeds beyond the section */
+  }
+
+  .section-number-bleed {
+    position: absolute;
+    top: 0;
+    /* Bleed off the left edge of the viewport.
+       Negative offset shoves the digit out so its left ~25% is clipped. */
+    left: -0.18em;
+    z-index: 0;
+    pointer-events: none;
+    user-select: none;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 800;
+    font-size: 360px;
+    line-height: 1;
+    letter-spacing: -0.05em;
+  }
+
+  /* On light bands (white-ish card on tinted bg), digit is solid dark navy. */
+  .scroll-section.band-light .section-number-bleed {
+    color: var(--dark-blue);
+    opacity: 0.95;
+  }
+
+  /* On dark bands (navy gradient), use a tinted blue at low opacity so the
+     digit reads as a watermark without competing with the content. */
+  .scroll-section.band-dark .section-number-bleed {
+    color: rgba(0, 153, 255, 0.16);
+  }
+
+  /* Card sits above the digit so its right portion gets hidden by the card on
+     narrower viewports — preserves the "bleed in from the left" feel without
+     requiring extra horizontal space. */
+  .section-card {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Push the section title down so its baseline sits roughly inline with the
+     middle of the giant digit (same vibe as the deck). */
+  .section-number-bleed + .section-card {
+    padding-top: clamp(40px, 6vw, 110px);
+  }
+
+  @media (max-width: 1100px) {
+    .section-number-bleed { font-size: 260px; }
+  }
+
+  @media (max-width: 768px) {
+    .section-number-bleed {
+      font-size: 200px;
+      left: -0.22em;
+    }
+    .section-number-bleed + .section-card {
+      padding-top: clamp(32px, 8vw, 72px);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .section-number-bleed { font-size: 160px; }
   }
 </style>
