@@ -152,27 +152,6 @@ TITLES:
       },
     ],
   },
-  {
-    label: 'Coding & data',
-    prompts: [
-      {
-        title: 'Explain this code',
-        body: `Below is a piece of code. Explain it to a competent engineer who didn't write it: what it does at a high level, the key control flow, anything subtle or non-obvious, and any bugs or smells you notice. Use specific line references. Don't paraphrase the code; explain it.
-
-CODE:
-[paste]`,
-      },
-      {
-        title: 'Pull insights from a messy CSV',
-        body: `Attached is a CSV. The columns are [list], roughly representing [domain]. I want to know:
-- [question 1]
-- [question 2]
-- Anything else interesting you notice
-
-Do the analysis in code (you can run Python). Output: the answer to each question with a number and a one-sentence interpretation, plus one chart for any finding that deserves a picture. If the data is too messy to answer something, say so — don't fudge.`,
-      },
-    ],
-  },
 ];
 ---
 <Section id="prompt-library" number="06" title="Prompt Library" band="dark">
